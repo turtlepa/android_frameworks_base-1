@@ -196,19 +196,6 @@ public class UsbDeviceManager {
         final StorageManager storageManager = StorageManager.from(mContext);
         final StorageVolume primary = storageManager.getPrimaryVolume();
         massStorageSupported = primary != null && primary.allowMassStorage();
-
-        StorageManager storageManager = (StorageManager)
-                mContext.getSystemService(Context.STORAGE_SERVICE);
-        StorageVolume[] volumes = storageManager.getVolumeList();
-
-        if (volumes.length > 0) {
-            if (Settings.Secure.getInt(mContentResolver, Settings.Secure.USB_MASS_STORAGE_ENABLED, 0) == 1 ) {
-                massStorageSupported = storageManager.isUsbMassStorageSupported();
-            } else {
-                massStorageSupported = false;
-            }
-        }
-
         mUseUsbNotification = !massStorageSupported;
 
         // make sure the ADB_ENABLED setting value matches the current state
