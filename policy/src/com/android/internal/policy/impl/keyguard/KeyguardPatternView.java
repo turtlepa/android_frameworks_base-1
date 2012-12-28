@@ -109,7 +109,6 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
 
     public void setLockPatternUtils(LockPatternUtils utils) {
         mLockPatternUtils = utils;
-        mLockPatternUtils.updateLockPatternSize();
     }
 
     @Override
@@ -117,8 +116,6 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
         super.onFinishInflate();
         mLockPatternUtils = mLockPatternUtils == null
                 ? new LockPatternUtils(mContext) : mLockPatternUtils;
-
-        mLockPatternUtils.updateLockPatternSize();
 
         mLockPatternView = (LockPatternView) findViewById(R.id.lockPatternView);
         mLockPatternView.setSaveEnabled(false);
@@ -130,8 +127,6 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
 
         // vibrate mode will be the same for the life of this screen
         mLockPatternView.setTactileFeedbackEnabled(mLockPatternUtils.isTactileFeedbackEnabled());
-
-        mLockPatternView.setLockPatternSize(mLockPatternUtils.getLockPatternSize());
 
         mForgotPatternButton = (Button) findViewById(R.id.forgot_password_button);
         // note: some configurations don't have an emergency call area
@@ -265,7 +260,6 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
         }
 
         public void onPatternDetected(List<LockPatternView.Cell> pattern) {
-            mLockPatternUtils.updateLockPatternSize();
             if (mLockPatternUtils.checkPattern(pattern)) {
                 mCallback.reportSuccessfulUnlockAttempt();
                 mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
