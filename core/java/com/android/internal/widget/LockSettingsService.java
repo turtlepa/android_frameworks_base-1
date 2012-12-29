@@ -62,8 +62,6 @@ public class LockSettingsService extends ILockSettings.Stub {
     private static final String LOCK_PATTERN_FILE = "gesture.key";
     private static final String LOCK_PASSWORD_FILE = "password.key";
 
-    public static final byte PATTERN_SIZE_DEFAULT = 3;
-
     private final Context mContext;
 
     public LockSettingsService(Context context) {
@@ -168,38 +166,15 @@ public class LockSettingsService extends ILockSettings.Stub {
         return readFromDb(key, defaultValue, userId);
     }
 
-    @Override
-    public byte getLockPatternSize(int userId) {
-        try {
-            long size = getLong(Settings.Secure.LOCK_PATTERN_SIZE, -1, userId);
-            if ( (size>0) && (size<128) ) {
-                return (byte) size;
-            }
-        } catch (RemoteException re) {
-            //Any invalid size handled below
-        }
-        return PATTERN_SIZE_DEFAULT;
-    }
-
-    private boolean isDefaultSize(int userId) {
-        return getLockPatternSize(userId) == PATTERN_SIZE_DEFAULT;
-    }
-
     private String getLockPatternFilename(int userId) {
-        return getLockPatternFilename(userId, isDefaultSize(userId));
-    }
-
-    private String getLockPatternFilename(int userId, boolean defaultSize) {
         String dataSystemDirectory =
                 android.os.Environment.getDataDirectory().getAbsolutePath() +
                 SYSTEM_DIRECTORY;
-        String patternFile = (defaultSize ? "" : "cm_") + LOCK_PATTERN_FILE;
-
         if (userId == 0) {
             // Leave it in the same place for user 0
-            return dataSystemDirectory + patternFile;
+            return dataSystemDirectory + LOCK_PATTERN_FILE;
         } else {
-            return  new File(Environment.getUserSystemDirectory(userId), patternFile)
+            return  new File(Environment.getUserSystemDirectory(userId), LOCK_PATTERN_FILE)
                     .getAbsolutePath();
         }
     }
@@ -235,9 +210,7 @@ public class LockSettingsService extends ILockSettings.Stub {
     public void setLockPattern(byte[] hash, int userId) throws RemoteException {
         checkWritePermission(userId);
 
-        boolean defaultSize = isDefaultSize(userId);
-        writeFile(getLockPatternFilename(userId,  defaultSize), hash);
-        writeFile(getLockPatternFilename(userId, !defaultSize), null);
+        writeFile(getLockPatternFilename(userId), hash);
     }
 
     @Override
