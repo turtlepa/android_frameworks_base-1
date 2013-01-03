@@ -1301,8 +1301,12 @@ public class PhoneStatusBar extends BaseStatusBar {
             cclock.updateClockVisibility(show);
         }
         else{
-            clock.updateClockVisibility(false);
-            cclock.updateClockVisibility(false);
+            if (clock != null) {
+                clock.updateClockVisibility(false);
+            }
+            if (cclock != null) {
+                cclock.updateClockVisibility(false);
+            }
         }
     }
 
