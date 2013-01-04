@@ -28,6 +28,12 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ServiceManager;
@@ -92,6 +98,9 @@ public class NavigationBarView extends LinearLayout {
     // workaround for LayoutTransitions leaving the nav buttons in a weird state (bug 5549288)
     final static boolean WORKAROUND_INVALID_LAYOUT = true;
     final static int MSG_CHECK_INVALID_LAYOUT = 8686;
+
+    private float mNavigationBarAlpha;
+    public static final float KEYGUARD_ALPHA = 0.44f;
 
     private class H extends Handler {
         public void handleMessage(Message m) {
@@ -196,6 +205,12 @@ public class NavigationBarView extends LinearLayout {
 
         mNavBarReceiver = new NavBarReceiver();
         mContext.registerReceiver(mNavBarReceiver, new IntentFilter(NAVBAR_EDIT));
+
+        Drawable bg = mContext.getResources().getDrawable(R.drawable.nav_bar_bg);
+        if(bg instanceof ColorDrawable) {
+            setBackground(new NavigationBarBackgroundDrawable(((ColorDrawable) bg).getColor()));
+        }
+        setBackgroundAlpha(mNavigationBarAlpha);
     }
 
     protected void updateResources() {

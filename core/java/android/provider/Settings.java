@@ -2866,6 +2866,12 @@ public final class Settings {
          */
         public static final String ON_SCREEN_BUTTONS_WIDTH = "on_screen_buttons_width";
 
+        /**
+         * Navigation bar alpha while in homescreen and lockscreen.
+         * @hide
+         */
+
+        public static final String NAVIGATION_BAR_ALPHA = "navigation_bar_alpha";
 
         /**
          * Whether or not volume button music controls should be enabled to seek media tracks
