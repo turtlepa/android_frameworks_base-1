@@ -2855,12 +2855,6 @@ public final class Settings {
         public static final String VOLUME_WAKE_SCREEN = "volume_wake_screen";
 
         /**
-         * Whether to enable the built-in safe media volume for headsets
-         * @hide
-         */
-        public static final String MANUAL_SAFE_MEDIA_VOLUME = "manual_safe_media_volume";
-
-        /**
          * Whether to change height of On screen Buttons.
          * @hide
          */
