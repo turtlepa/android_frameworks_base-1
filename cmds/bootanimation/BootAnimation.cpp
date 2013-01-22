@@ -17,7 +17,6 @@
 #define LOG_TAG "BootAnimation"
 
 #include <stdint.h>
-#include <stdio.h>
 #include <sys/types.h>
 #include <math.h>
 #include <fcntl.h>
@@ -216,7 +215,6 @@ status_t BootAnimation::initTexture(void* buffer, size_t len)
 }
 
 status_t BootAnimation::readyToRun() {
-    char previewString[256];
     mAssets.addDefaultAssets();
 
     sp<IBinder> dtoken(SurfaceComposerClient::getBuiltInDisplay(
@@ -289,23 +287,6 @@ status_t BootAnimation::readyToRun() {
             ((access(SYSTEM_BOOTANIMATION_FILE, R_OK) == 0) &&
             (mZip.open(SYSTEM_BOOTANIMATION_FILE) == NO_ERROR))) {
         mAndroidAnimation = false;
-    FILE *mPreviewFile = fopen ( "/data/data/com.cyanogenmod.cmparts/files/preview_bootanim", "r" );
-    if(mPreviewFile != NULL) {
-        if(fgets(previewString, 256, mPreviewFile) != NULL) {
-            status_t err = mZip.open(previewString);
-            if(err == NO_ERROR) return NO_ERROR;
-        }
-    }
-
-    status_t err = mZip.open("/data/data/com.cyanogenmod.cmbootanimation/files/bootanimation.zip");
-    if (err != NO_ERROR) {
-        err = mZip.open("/data/local/bootanimation.zip");
-        if (err != NO_ERROR) {
-            err = mZip.open("/system/media/bootanimation.zip");
-            if (err != NO_ERROR) {
-                mAndroidAnimation = true;
-            }
-        }
     }
 
     return NO_ERROR;

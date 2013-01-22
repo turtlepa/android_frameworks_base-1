@@ -2890,11 +2890,6 @@ public final class Settings {
          */
         public static final String ON_SCREEN_BUTTONS_WIDTH = "on_screen_buttons_width";
 
-        /**
-         * Sets the bootanimation pathname for use with CMBootanimation
-         * @hide
-         */
-        public static final String BOOTANIMATION_PATH = "bootanimation_path";
 
         /**
          * Whether or not volume button music controls should be enabled to seek media tracks
