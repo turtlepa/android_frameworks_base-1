@@ -201,7 +201,6 @@ class MountService extends IMountService.Stub
     private CountDownLatch                        mConnectedSignal = new CountDownLatch(1);
     private CountDownLatch                        mAsecsScanned = new CountDownLatch(1);
     private boolean                               mSendUmsConnectedOnBoot = false;
-    private boolean                               mUmsSupported = false;
 
     /**
      * Private hash of currently mounted secure containers.
@@ -1217,7 +1216,6 @@ class MountService extends IMountService.Stub
                                     allowMassStorage, maxFileSize, null);
                             addVolumeLocked(volume);
                         }
-                        mUmsSupported |= allowMassStorage;
                     }
 
                     a.recycle();
@@ -1318,7 +1316,7 @@ class MountService extends IMountService.Stub
 
         // Watch for USB changes on primary volume
         final StorageVolume primary = getPrimaryPhysicalVolume();
-        if (mUmsSupported) {
+        if (primary != null && primary.allowMassStorage()) {
             mContext.registerReceiver(
                     mUsbReceiver, new IntentFilter(UsbManager.ACTION_USB_STATE), null, mHandler);
         }

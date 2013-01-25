@@ -195,7 +195,7 @@ public class LegacyUsbDeviceManager extends UsbDeviceManager {
 
         if (volumes.length > 0) {
             if (Settings.Secure.getInt(mContentResolver, Settings.Secure.USB_MASS_STORAGE_ENABLED, 0 ) == 1 ) {
-                massStorageSupported = storageManager.isUsbMassStorageSupported();
+                massStorageSupported = volumes[0].allowMassStorage();
             } else {
                 massStorageSupported = false;
             }
