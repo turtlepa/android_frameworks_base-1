@@ -2988,12 +2988,6 @@ public final class Settings {
         public static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
 
         /**
-         * Whether to dim the notification shade when pulling down the status bar
-         * @hide
-         */
-        public static final String STATUS_BAR_DIM = "status_bar_dim";
-
-        /**
          * Show the pending notification counts as overlays on the status bar
          * @hide
          */
