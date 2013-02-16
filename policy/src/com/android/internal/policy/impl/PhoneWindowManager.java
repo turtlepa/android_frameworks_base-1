@@ -1482,21 +1482,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } else {
                 // Height of the navigation bar when presented horizontally at bottom
                 mNavigationBarHeightForRotation[mPortraitRotation] =
-                mNavigationBarHeightForRotation[mUpsideDownRotation] =
-                        mContext.getResources().getDimensionPixelSize(
-                                com.android.internal.R.dimen.navigation_bar_height);
+                mNavigationBarHeightForRotation[mUpsideDownRotation] = mOnScreenButtonsHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
                 mNavigationBarHeightForRotation[mLandscapeRotation] =
-                mNavigationBarHeightForRotation[mSeascapeRotation] =
-                        mContext.getResources().getDimensionPixelSize(
-                                com.android.internal.R.dimen.navigation_bar_height_landscape);
+                mNavigationBarHeightForRotation[mSeascapeRotation] = mOnScreenButtonsWidth * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
 
                 // Width of the navigation bar when presented vertically along one side
                 mNavigationBarWidthForRotation[mPortraitRotation] =
                 mNavigationBarWidthForRotation[mUpsideDownRotation] =
                 mNavigationBarWidthForRotation[mLandscapeRotation] =
-                mNavigationBarWidthForRotation[mSeascapeRotation] =
-                        mContext.getResources().getDimensionPixelSize(
-                                com.android.internal.R.dimen.navigation_bar_width);
+                mNavigationBarWidthForRotation[mSeascapeRotation] = mOnScreenButtonsWidth * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
             }
         }
 
