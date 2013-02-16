@@ -2908,6 +2908,7 @@ public final class Settings {
         public static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
 
         /**
+<<<<<<< HEAD
          * Whether to dim the notification shade when pulling down the status bar
          * @hide
          */
