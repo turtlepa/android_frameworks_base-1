@@ -126,7 +126,6 @@ final class DisplayPowerRequest {
                 + ", screenBrightness=" + screenBrightness
                 + ", screenAutoBrightnessAdjustment=" + screenAutoBrightnessAdjustment
                 + ", useAutoBrightness=" + useAutoBrightness
-                + ", blockScreenOn=" + blockScreenOn;
                 + ", blockScreenOn=" + blockScreenOn
                 + ", electronBeamMode=" + electronBeamMode
                 + ", electronBeamOffEnabled=" + electronBeamOffEnabled;
