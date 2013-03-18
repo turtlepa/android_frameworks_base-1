@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.android.systemui.statusbar.phone.PanelBar;
+
 public class PowerWidget extends FrameLayout {
     private static final String TAG = "PowerWidget";
 
@@ -132,6 +134,8 @@ public class PowerWidget extends FrameLayout {
 
     private LinearLayout mButtonLayout;
     private SnappingScrollView mScrollView;
+
+    public PanelBar mBar;
 
     private static final FrameLayout.LayoutParams PARAMS_BRIGHTNESS = new FrameLayout.LayoutParams(
             LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -254,6 +258,7 @@ public class PowerWidget extends FrameLayout {
         try {
             // we need to instantiate a new button and add it
             PowerButton pb = sPossibleButtons.get(key).newInstance();
+            pb.setBar(mBar);
             pb.setExternalClickListener(mAllButtonClickListener);
             pb.setExternalLongClickListener(mAllButtonLongClickListener);
             // save it
@@ -499,6 +504,10 @@ public class PowerWidget extends FrameLayout {
         for (PowerButton button : mButtons.values()) {
             button.setHapticFeedback(hapticFeedback, clickPattern, longClickPattern);
         }
+    }
+
+    public void setBar(PanelBar bar) {
+        mBar = bar;
     }
 
     // our own broadcast receiver :D
