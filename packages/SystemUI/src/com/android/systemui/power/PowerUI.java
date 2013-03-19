@@ -128,6 +128,10 @@ public class PowerUI extends SystemUI {
                 final boolean plugged = mPlugType != 0;
                 final boolean oldPlugged = oldPlugType != 0;
 
+                if (mFirstPowerChangeEvent > 0 && plugged) {
+                    mFirstPowerChangeEvent = 0;
+                }
+
                 int oldBucket = findBatteryLevelBucket(oldBatteryLevel);
                 int bucket = findBatteryLevelBucket(mBatteryLevel);
 
