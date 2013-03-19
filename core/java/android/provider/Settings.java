@@ -3184,7 +3184,7 @@ public final class Settings {
          */
         public static final String FORCE_DUAL_PANEL = "force_dualpanel";
 
-  	/**
+        /**
          * Holds the text for the Carrier label. An empty string
          * will bring the default text back.
          * @hide
@@ -5368,10 +5368,10 @@ public final class Settings {
         public static final String POWER_NOTIFICATIONS_ENABLED = "power_notifications_enabled";
 
         /**
-         * Whether to use system default notification ringtone for power sounds
+         * Whether to vibrate when charger power is connected/disconnected
          * @hide
          */
-        public static final String POWER_NOTIFICATIONS_USE_DEFAULT_ENABLED = "power_notifications_use_default_enabled";
+        public static final String POWER_NOTIFICATIONS_VIBRATE = "power_notifications_vibrate";
 
         /**
          * URI for power notification sounds
@@ -6449,7 +6449,7 @@ public final class Settings {
             AUTO_TIME_ZONE,
             POWER_SOUNDS_ENABLED,
             POWER_NOTIFICATIONS_ENABLED,
-            POWER_NOTIFICATIONS_USE_DEFAULT_ENABLED,
+            POWER_NOTIFICATIONS_VIBRATE,
             POWER_NOTIFICATIONS_RINGTONE,
             DOCK_SOUNDS_ENABLED,
             USB_MASS_STORAGE_ENABLED,
