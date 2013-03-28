@@ -1764,4 +1764,5 @@
   <!-- Screenshot Trash -->
   <java-symbol type="string" name="trash" />
 
+  <java-symbol type="drawable" name="cm_default_wallpaper" />
 </resources>
