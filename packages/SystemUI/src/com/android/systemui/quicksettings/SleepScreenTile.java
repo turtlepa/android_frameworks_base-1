@@ -36,10 +36,9 @@ public class SleepScreenTile extends QuickSettingsTile {
     private PowerManager pm;
     public static QuickSettingsTile mInstance;
 
-    public static QuickSettingsTile getInstance(Context context, LayoutInflater inflater,
-            QuickSettingsContainerView container, final QuickSettingsController qsc, Handler handler, String id) {
+    public static QuickSettingsTile getInstance(Context context, final QuickSettingsController qsc, Handler handler, String id) {
         mInstance = null;
-        mInstance = new SleepScreenTile(context, inflater, container, qsc);
+        mInstance = new SleepScreenTile(context, qsc);
         return mInstance;
     }
 
