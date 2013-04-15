@@ -78,6 +78,6 @@ public class SleepScreenTile extends QuickSettingsTile {
                 im.injectInputEvent(keyEvent, InputManager.INJECT_INPUT_EVENT_MODE_WAIT_FOR_RESULT);
             }
         }).start();
-    }
-
-}
+     }
+ 
+ }
