@@ -165,12 +165,6 @@ public class PowerWidget extends FrameLayout {
         // need change cause of animation updateVisibility();
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        updateVisibility();
-    }
-
     static long[] getLongIntArray(Resources r, int resid) {
         int[] ar = r.getIntArray(resid);
         if (ar == null) {
