@@ -43,9 +43,8 @@ public class SleepScreenTile extends QuickSettingsTile {
         return mInstance;
     }
 
-    public SleepScreenTile(Context context, LayoutInflater inflater,
-            QuickSettingsContainerView container, QuickSettingsController qsc) {
-        super(context, inflater, container, qsc);
+    public SleepScreenTile(Context context, QuickSettingsController qsc) {
+        super(context, qsc);
         pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
         mDrawable = R.drawable.ic_qs_power;
         mLabel = mContext.getString(R.string.quick_settings_power);
