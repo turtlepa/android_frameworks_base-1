@@ -386,6 +386,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mVolBtnMusicControls;
     boolean mIsLongPress;
 
+    boolean mHideStatusBar;
+
     private static final class PointerLocationInputEventReceiver extends InputEventReceiver {
         private final PointerLocationView mView;
 
@@ -674,6 +676,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HARDWARE_KEY_REBINDING), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HIDE_STATUSBAR), false, this);
 
             updateSettings();
         }
@@ -3573,6 +3577,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // and mTopIsFullscreen is that that mTopIsFullscreen is set only if the window
                 // has the FLAG_FULLSCREEN set.  Not sure if there is another way that to be the
                 // case though.
+                mHideStatusBar = Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.HIDE_STATUSBAR, 0) == 1;
                 if (topIsFullscreen) {
                     if (DEBUG_LAYOUT) Log.v(TAG, "** HIDING status bar");
                     if (mStatusBar.hideLw(true)) {
