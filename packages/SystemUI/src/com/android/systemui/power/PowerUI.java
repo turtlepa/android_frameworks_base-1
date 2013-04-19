@@ -65,7 +65,7 @@ public class PowerUI extends SystemUI {
     TextView mBatteryLevelTextView;
 
     // For filtering ACTION_POWER_DISCONNECTED on boot
-    int mFirstPowerChangeEvent = 1;
+    boolean mIgnoreFirstPowerEvent = true;
 
     public void start() {
 
@@ -128,8 +128,8 @@ public class PowerUI extends SystemUI {
                 final boolean plugged = mPlugType != 0;
                 final boolean oldPlugged = oldPlugType != 0;
 
-                if (mFirstPowerChangeEvent > 0 && plugged) {
-                    mFirstPowerChangeEvent = 0;
+                if (mIgnoreFirstPowerEvent && plugged) {
+                    mIgnoreFirstPowerEvent = false;
                 }
 
                 int oldBucket = findBatteryLevelBucket(oldBatteryLevel);
@@ -177,20 +177,13 @@ public class PowerUI extends SystemUI {
                     || action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
                 final ContentResolver cr = mContext.getContentResolver();
 
-                switch (mFirstPowerChangeEvent) {
-                    case 1:
-                        mFirstPowerChangeEvent = 0;
-                        if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-                            break;
-                        }
-                        // fallthrough
-                    case 0:
-                    default:
-                        if (Settings.Global.getInt(cr,
-                                Settings.Global.POWER_NOTIFICATIONS_ENABLED, 0)
-                                == 1) {
-                            playPowerNotificationSound();
-                        }
+                if (mIgnoreFirstPowerEvent) {
+                    mIgnoreFirstPowerEvent = false;
+                } else {
+                    if (Settings.Global.getInt(cr,
+                            Settings.Global.POWER_NOTIFICATIONS_ENABLED, 0) == 1) {
+                        playPowerNotificationSound();
+                    }
                 }
             } else {
                 Slog.w(TAG, "unknown intent: " + intent);
@@ -334,7 +327,7 @@ public class PowerUI extends SystemUI {
             }
         }
         if (Settings.Global.getInt(cr,
-                Settings.Global.POWER_NOTIFICATIONS_VIBRATE, 1) == 0) {
+                Settings.Global.POWER_NOTIFICATIONS_VIBRATE, 0) == 0) {
             powerNotify.defaults &= ~Notification.DEFAULT_VIBRATE;
         }
 
