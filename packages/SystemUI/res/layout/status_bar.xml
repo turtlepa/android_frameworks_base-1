@@ -87,6 +87,7 @@
                          android:id="@+id/center_clock"
                          android:layout_width="wrap_content"
                          android:layout_height="match_parent"
+                         android:visibility="gone"
                          android:singleLine="true" />
             </LinearLayout>
             <LinearLayout 
@@ -180,6 +181,7 @@
                     android:layout_height="match_parent"
                     android:singleLine="true"
                     android:paddingLeft="6dip"
+                    android:visibility="gone"
                     android:gravity="center_vertical|left"
                     android:clickable="false"
                     />
