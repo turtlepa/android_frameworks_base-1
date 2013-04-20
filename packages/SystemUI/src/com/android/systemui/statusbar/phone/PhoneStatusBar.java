@@ -101,8 +101,6 @@ import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
-import com.android.systemui.statusbar.policy.CenterClock;
-import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.DockBatteryController;
 import com.android.systemui.statusbar.policy.BluetoothController;
@@ -203,6 +201,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     // left-hand icons
     LinearLayout mStatusIcons;
+    LinearLayout mCenterClockLayout;
     // the icons themselves
     IconMerger mNotificationIcons;
     // [+>
@@ -243,8 +242,7 @@ public class PhoneStatusBar extends BaseStatusBar {
     private boolean mShowCarrierInPanel = false;
 
     // clock
-    private int mClockStyle;
-    LinearLayout mCenterClockLayout;
+    private boolean mShowClock;
 
     // drag bar
     CloseDragHandle mCloseView;

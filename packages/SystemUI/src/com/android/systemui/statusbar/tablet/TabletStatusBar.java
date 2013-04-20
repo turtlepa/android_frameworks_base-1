@@ -72,8 +72,6 @@ import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.DoNotDisturb;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.NotificationData.Entry;
-import com.android.systemui.statusbar.policy.CenterClock;
-import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.policy.BatteryController;
@@ -184,7 +182,7 @@ public class TabletStatusBar extends BaseStatusBar implements
     private CompatModePanel mCompatModePanel;
 
     // clock
-    private int mClockStyle;
+    private boolean mShowClock;
 
     private int mSystemUiVisibility = 0;
 
@@ -948,18 +946,12 @@ public class TabletStatusBar extends BaseStatusBar implements
 
     public void showClock(boolean show) {
         ContentResolver resolver = mContext.getContentResolver();
-        Clock clock = (Clock) mBarContents.findViewById(R.id.clock);
-        CenterClock cclock = (CenterClock) mBarContents.findViewById(R.id.center_clock);
+        View clock = mBarContents.findViewById(R.id.clock);
         View network_text = mBarContents.findViewById(R.id.network_text);
-        mClockStyle = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_CLOCK_STYLE, 1);
-        if (mClockStyle != 0 && clock != null && cclock != null) {
-            clock.updateClockVisibility(show);
-            cclock.updateClockVisibility(show);
-        }
-        else{
-            clock.updateClockVisibility(false);
-            cclock.updateClockVisibility(false);
+        mShowClock = (Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_CLOCK, 1) == 1);
+        if (clock != null) {
+            clock.setVisibility(show ? (mShowClock ? View.VISIBLE : View.GONE) : View.GONE);
         }
         if (network_text != null) {
             network_text.setVisibility((!show) ? View.VISIBLE : View.GONE);
