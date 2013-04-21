@@ -83,6 +83,10 @@
     <string name="navbar_menu_always_button">Menu (alwaysShow) button</string>
     <string name="navbar_menu_big_button">Menu button</string>
 
+    <!-- Notification drawer toasts -->
+    <string name="calendar_error_alert">No Calendar app installed.</string>
+    <string name="clock_error_alert">No DeskClock app installed.</string>
+
     <!-- Battery status in pie controls -->
     <string name="pie_battery_status_charging">Charging (<xliff:g id="percent">%d</xliff:g>%%)</string>
     <string name="pie_battery_status_full">Charged</string>
