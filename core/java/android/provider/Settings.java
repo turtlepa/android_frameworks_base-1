@@ -3639,6 +3639,12 @@ public final class Settings {
          */
         public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
 
+        /**
+         * Lock Volume Keys, Whether to lock ringer volume changes in silent mode.
+         * @hide
+         */
+        public static final String LOCK_VOLUME_KEYS = "lock_volume_keys";
+
     }
 
     /**
