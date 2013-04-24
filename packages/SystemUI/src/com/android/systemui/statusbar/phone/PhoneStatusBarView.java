@@ -376,7 +376,7 @@ public class PhoneStatusBarView extends PanelBar {
                 mBar.updateNotificationShortcutsVisibility(false);
             }
         }
-        mBar.updateCarrierAndWifiLabelVisibility(false);
+        mBar.updateCarrierLabelVisibility(false);
     }
 
     private boolean isCurrentHomeActivity(ComponentName component, ActivityInfo homeInfo) {
