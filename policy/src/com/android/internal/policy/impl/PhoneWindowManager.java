@@ -4338,6 +4338,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             case KeyEvent.KEYCODE_HOME:
                 if (down && !isScreenOn && isWakeKey && mHomeWakeScreen) {
+                    if (isFastPowerOnActive()) {
+                        break;
+                    }
                     if (keyguardActive) {
                         // If the keyguard is showing, let it wake the device when ready.
                         mKeyguardMediator.onWakeKeyWhenKeyguardShowingTq(keyCode);
@@ -4458,6 +4461,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 result &= ~ACTION_PASS_TO_USER;
                 if (down) {
+                    if (isFastPowerOnActive())
+                        startFastPowerOn();
                     if (isScreenOn && !mPowerKeyTriggered
                             && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
                         mPowerKeyTriggered = true;
@@ -4485,6 +4490,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             Log.w(TAG, "ITelephony threw RemoteException", ex);
                         }
                     }
+
                     interceptPowerKeyDown(!isScreenOn || hungUp
                             || mVolumeDownKeyTriggered || mVolumeUpKeyTriggered);
                 } else {
@@ -5854,5 +5860,23 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         pw.print(prefix); pw.print("mDemoHdmiRotation="); pw.print(mDemoHdmiRotation);
                 pw.print(" mDemoHdmiRotationLock="); pw.println(mDemoHdmiRotationLock);
         pw.print(prefix); pw.print("mUndockedHdmiRotation="); pw.println(mUndockedHdmiRotation);
+    }
+
+    private Boolean isFastPowerOnActive() {
+        ActivityManager activityManager = (ActivityManager) mContext.getSystemService( Context.ACTIVITY_SERVICE );
+        List<RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
+        for(int i = 0; i < procInfos.size(); i++){
+            if (procInfos.get(i).processName.equals("com.qualcomm.fastboot")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void startFastPowerOn() {
+        Intent intent = new Intent(Intent.ACTION_FAST_BOOT_START);
+        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        intent.putExtra("state", false);
+        mContext.sendBroadcast(intent);
     }
 }
