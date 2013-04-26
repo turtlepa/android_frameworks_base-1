@@ -3722,6 +3722,12 @@ public final class Settings {
           */
         public static final String SYSTEM_POWER_CRT_MODE = "system_power_crt_mode";
 
+        /**
+        * Sets the alpha (transparency) of notifications
+        * @hide
+        */
+        public static final String NOTIF_ALPHA = "notif_alpha";
+
     }
 
     /**
