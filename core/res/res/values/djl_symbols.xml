@@ -75,4 +75,7 @@
   <java-symbol type="anim" name="slide_in_left_no_fade" />
   <java-symbol type="anim" name="slide_out_right_no_fade" />
 
+  <!-- In WiFi AP notification -->
+  <java-symbol type="string" name="notify_turn_wifi_ap_off_title" />
+
 </resources>
