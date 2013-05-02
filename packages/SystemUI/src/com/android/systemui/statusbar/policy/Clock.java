@@ -74,7 +74,6 @@ public class Clock extends TextView {
     private String mClockFormatString;
     private SimpleDateFormat mClockFormat;
     private Locale mLocale;
-    private SettingsObserver mObserver;
 
     private int mAmPmStyle = AM_PM_STYLE_GONE;
     public boolean mShowClock;
@@ -112,10 +111,6 @@ public class Clock extends TextView {
             updateSettings();
         }
 
-        void unobserve() {	
-            mContext.getContentResolver().unregisterContentObserver(this);
-        }
-
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
@@ -148,7 +143,6 @@ public class Clock extends TextView {
             filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
 
             getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
-            mObserver.observe();
         }
 
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
@@ -157,7 +151,8 @@ public class Clock extends TextView {
         // The time zone may have changed while the receiver wasn't registered, so update the Time
         mCalendar = Calendar.getInstance(TimeZone.getDefault());
 
-        mObserver = new SettingsObserver(mHandler);
+        mSettingsObserver = new SettingsObserver(new Handler());
+        mSettingsObserver.observe();
         updateSettings();
     }
 
@@ -166,7 +161,7 @@ public class Clock extends TextView {
         super.onDetachedFromWindow();
         if (mAttached) {
             getContext().unregisterReceiver(mIntentReceiver);
-            mObserver.unobserve();
+            getContext().getContentResolver().unregisterContentObserver(mSettingsObserver);
             mAttached = false;
         }
     }
