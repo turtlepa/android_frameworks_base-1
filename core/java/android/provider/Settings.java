@@ -3770,6 +3770,12 @@ public final class Settings {
          */
         public static final String NFC_POLLING_MODE = "nfc_polling_mode";
 
+        /**
+         * Override and forcefully disable the fullscreen keyboard
+         * @hide
+         */
+        public static final String DISABLE_FULLSCREEN_KEYBOARD = "disable_fullscreen_keyboard";
+
     }
 
     /**
