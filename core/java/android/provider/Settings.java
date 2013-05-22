@@ -3776,6 +3776,11 @@ public final class Settings {
          */
         public static final String DISABLE_FULLSCREEN_KEYBOARD = "disable_fullscreen_keyboard";
 
+        /**
+         * Ability to enable/disable Daul pane prefs.
+         */
+        public static final String DUAL_PANE_PREFS = "dual_pane_prefs";
+
     }
 
     /**
