@@ -98,11 +98,11 @@ final class DisplayPowerRequest {
         blockScreenOn = other.blockScreenOn;
         electronBeamMode = other.electronBeamMode;
         electronBeamOffEnabled = other.electronBeamOffEnabled;
+        responsitivityFactor = other.responsitivityFactor;
     }
 
     public int getElectronBeamMode() {
         return electronBeamMode;
-        responsitivityFactor = other.responsitivityFactor;
     }
 
     @Override
@@ -120,7 +120,7 @@ final class DisplayPowerRequest {
                 && useAutoBrightness == other.useAutoBrightness
                 && blockScreenOn == other.blockScreenOn
                 && electronBeamMode == other.electronBeamMode
-                && electronBeamOffEnabled == other.electronBeamOffEnabled;
+                && electronBeamOffEnabled == other.electronBeamOffEnabled
                 && Math.abs(responsitivityFactor - other.responsitivityFactor) < 1E-6;
     }
 
@@ -138,7 +138,7 @@ final class DisplayPowerRequest {
                 + ", useAutoBrightness=" + useAutoBrightness
                 + ", blockScreenOn=" + blockScreenOn
                 + ", electronBeamMode=" + electronBeamMode
-                + ", electronBeamOffEnabled=" + electronBeamOffEnabled;
+                + ", electronBeamOffEnabled=" + electronBeamOffEnabled
                 + ", responsitivityFactor=" + responsitivityFactor;
     }
 }
