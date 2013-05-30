@@ -62,9 +62,16 @@ final class DisplayPowerRequest {
     // visible to the user.
     public boolean blockScreenOn;
 
+<<<<<<< HEAD
     // Slim settings - override config for ElectronBeam on or off
     public int electronBeamMode;
     public boolean electronBeamOffEnabled;
+=======
+    // Multiplication factor for delays used in auto-brightness computations
+    // Lower values mean faster reaction to changing light conditions, but
+    // potentially higher CPU usage and flicker.
+    public float responsitivityFactor;
+>>>>>>> d62ebbdaa0491fe23d6968deae85f3a6c5112ea8
 
     public DisplayPowerRequest() {
         screenState = SCREEN_STATE_BRIGHT;
@@ -73,8 +80,12 @@ final class DisplayPowerRequest {
         screenAutoBrightnessAdjustment = 0.0f;
         useAutoBrightness = false;
         blockScreenOn = false;
+<<<<<<< HEAD
         electronBeamMode = 0;
         electronBeamOffEnabled = false;
+=======
+        responsitivityFactor = 1.0f;
+>>>>>>> d62ebbdaa0491fe23d6968deae85f3a6c5112ea8
     }
 
     public DisplayPowerRequest(DisplayPowerRequest other) {
@@ -88,12 +99,16 @@ final class DisplayPowerRequest {
         screenAutoBrightnessAdjustment = other.screenAutoBrightnessAdjustment;
         useAutoBrightness = other.useAutoBrightness;
         blockScreenOn = other.blockScreenOn;
+<<<<<<< HEAD
         electronBeamMode = other.electronBeamMode;
         electronBeamOffEnabled = other.electronBeamOffEnabled;
     }
 
     public int getElectronBeamMode() {
         return electronBeamMode;
+=======
+        responsitivityFactor = other.responsitivityFactor;
+>>>>>>> d62ebbdaa0491fe23d6968deae85f3a6c5112ea8
     }
 
     @Override
@@ -110,8 +125,12 @@ final class DisplayPowerRequest {
                 && screenAutoBrightnessAdjustment == other.screenAutoBrightnessAdjustment
                 && useAutoBrightness == other.useAutoBrightness
                 && blockScreenOn == other.blockScreenOn
+<<<<<<< HEAD
                 && electronBeamMode == other.electronBeamMode
                 && electronBeamOffEnabled == other.electronBeamOffEnabled;
+=======
+                && Math.abs(responsitivityFactor - other.responsitivityFactor) < 1E-6;
+>>>>>>> d62ebbdaa0491fe23d6968deae85f3a6c5112ea8
     }
 
     @Override
@@ -127,7 +146,11 @@ final class DisplayPowerRequest {
                 + ", screenAutoBrightnessAdjustment=" + screenAutoBrightnessAdjustment
                 + ", useAutoBrightness=" + useAutoBrightness
                 + ", blockScreenOn=" + blockScreenOn
+<<<<<<< HEAD
                 + ", electronBeamMode=" + electronBeamMode
                 + ", electronBeamOffEnabled=" + electronBeamOffEnabled;
+=======
+                + ", responsitivityFactor=" + responsitivityFactor;
+>>>>>>> d62ebbdaa0491fe23d6968deae85f3a6c5112ea8
     }
 }
