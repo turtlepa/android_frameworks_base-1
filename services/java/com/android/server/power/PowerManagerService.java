@@ -1751,12 +1751,10 @@ public final class PowerManagerService extends IPowerManager.Stub
 
             mDisplayPowerRequest.blockScreenOn = mScreenOnBlocker.isHeld();
 
-<<<<<<< HEAD
             mDisplayPowerRequest.electronBeamOffEnabled = mElectronBeamOffEnabled;
             mDisplayPowerRequest.electronBeamMode = mElectronBeamMode;
-=======
+
             mDisplayPowerRequest.responsitivityFactor = mAutoBrightnessResponsitivityFactor;
->>>>>>> d62ebbdaa0491fe23d6968deae85f3a6c5112ea8
 
             mDisplayReady = mDisplayPowerController.requestPowerState(mDisplayPowerRequest,
                     mRequestWaitForNegativeProximity);
