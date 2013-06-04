@@ -3800,6 +3800,13 @@ public final class Settings {
         public static final String NFC_POLLING_MODE = "nfc_polling_mode";
 
         /**
+         * whether to hide the Ram Usage Bar on recent switcher
+         *
+         * @hide
+         */
+        public static final String RECENTS_RAM_BAR = "recents_ram_bar";
+
+        /**
          * Override and forcefully disable the fullscreen keyboard
          * @hide
          */
