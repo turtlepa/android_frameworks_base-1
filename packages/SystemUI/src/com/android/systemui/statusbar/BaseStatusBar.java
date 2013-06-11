@@ -51,12 +51,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -177,10 +172,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     // Pie Control
     protected PieController mPieController;
 
-    // Color fields
-    private Canvas mCurrentCanvas;
-    private Canvas mNewCanvas;
-
     // UI-specific methods
 
     /**
@@ -197,20 +188,16 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     public Ticker getTicker() {
         return mTicker;
-    }
+    }mHaloActive = Settings
 
     private boolean mShowNotificationCounts;
 
-    public IStatusBarService getService() {
+    public IStatusBarService getStatusBarService() {
         return mBarService;
     }
 
     public boolean isDeviceProvisioned() {
         return mDeviceProvisioned;
-    }
-
-    public NotificationData getNotificationData() {
-        return mNotificationData;
     }
 
     private ContentObserver mProvisioningObserver = new ContentObserver(new Handler()) {
@@ -371,23 +358,6 @@ public abstract class BaseStatusBar extends SystemUI implements
             addNavigationBarCallback(mPieController);
         }
 
-        // Listen for HALO state
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.HALO_ACTIVE), false, new ContentObserver(new Handler()) {
-            @Override
-            public void onChange(boolean selfChange) {
-                updateHalo();
-            }});
-
-        updateHalo();
-
-    }
-
-    public void setHaloTaskerActive(boolean haloTaskerActive, boolean updateNotificationIcons) {
-        mHaloTaskerActive = haloTaskerActive;
-        if (updateNotificationIcons) {
-            updateNotificationIcons();
-        }
     }
 
     protected void updateHaloButton() {
