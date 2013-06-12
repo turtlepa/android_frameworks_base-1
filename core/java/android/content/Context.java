@@ -2267,16 +2267,14 @@ public abstract class Context {
     public static final String USER_SERVICE = "user";
 
     /**
-     * Determine whether the application or calling application is in
-     * incognito mode. This is a privacy feature intended to permit the user
-     * to control access to personal data. When an app is in incognito mode,
-     * it will receive an empty set when contacts, call logs, messages, or calendar
-     * is queried. Applications and content providers can sheck this value if
-     * they wish to honor incognito mode.
+     * Determine whether the application or calling application has
+     * privacy guard. This is a privacy feature intended to permit the user
+     * to control access to personal data. Applications and content providers
+     * can check this value if they wish to honor privacy guard.
      *
      * @hide
      */
-    public abstract boolean isIncognito();
+    public abstract boolean isPrivacyGuardEnabled();
 
     /**
      * Determine whether the given permission is allowed for a particular

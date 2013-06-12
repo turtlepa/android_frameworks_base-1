@@ -1818,10 +1818,10 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             return true;
         }
 
-        case IS_PROCESS_INCOGNITO_TRANSACTION: {
+        case IS_PRIVACY_GUARD_ENABLED_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
             int pid = data.readInt();
-            boolean res = isProcessIncognito(pid);
+            boolean res = isPrivacyGuardEnabledForProcess(pid);
             reply.writeNoException();
             reply.writeInt(res ? 1 : 0);
             return true;
@@ -4157,12 +4157,12 @@ class ActivityManagerProxy implements IActivityManager
         return res;
     }
 
-    public boolean isProcessIncognito(int pid) throws RemoteException {
+    public boolean isPrivacyGuardEnabledForProcess(int pid) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         data.writeInt(pid);
-        mRemote.transact(IS_PROCESS_INCOGNITO_TRANSACTION, data, reply, 0);
+        mRemote.transact(IS_PRIVACY_GUARD_ENABLED_TRANSACTION, data, reply, 0);
         reply.readException();
         int res = reply.readInt();
         data.recycle();

@@ -432,7 +432,7 @@ public class MockContext extends Context {
     }
 
     @Override
-    public boolean isIncognito() {
+    public boolean isPrivacyGuardEnabled() {
         throw new UnsupportedOperationException();
     }
 

@@ -29,7 +29,7 @@ public class PackageUserState {
     public boolean notLaunched;
     public boolean installed;
     public int enabled;
-    public boolean incognito;
+    public boolean privacyGuard;
 
     public HashSet<String> disabledComponents;
     public HashSet<String> enabledComponents;
@@ -37,7 +37,7 @@ public class PackageUserState {
     public PackageUserState() {
         installed = true;
         enabled = COMPONENT_ENABLED_STATE_DEFAULT;
-        incognito = false;
+        privacyGuard = false;
     }
 
     public PackageUserState(PackageUserState o) {
@@ -45,7 +45,7 @@ public class PackageUserState {
         stopped = o.stopped;
         notLaunched = o.notLaunched;
         enabled = o.enabled;
-        incognito = o.incognito;
+        privacyGuard = o.privacyGuard;
         disabledComponents = o.disabledComponents != null
                 ? new HashSet<String>(o.disabledComponents) : null;
         enabledComponents = o.enabledComponents != null

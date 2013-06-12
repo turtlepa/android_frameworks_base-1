@@ -888,7 +888,7 @@ public final class BridgeContext extends Context {
     }
 
     @Override
-    public boolean isIncognito() {
+    public boolean isPrivacyGuardEnabled() {
         // pass
         return false;
     }

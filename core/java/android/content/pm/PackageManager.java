@@ -2946,7 +2946,7 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    public abstract boolean getIncognitoModeSetting(String packageName);
+    public abstract boolean getPrivacyGuardSetting(String packageName);
 
     /**
      * @param packageName
@@ -2954,7 +2954,7 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    public abstract void setIncognitoModeSetting(String packageName, boolean enabled);
+    public abstract void setPrivacyGuardSetting(String packageName, boolean enabled);
 
     /**
      * Return whether the device has been booted into safe mode.

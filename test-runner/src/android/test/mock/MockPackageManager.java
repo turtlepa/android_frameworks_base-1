@@ -493,12 +493,12 @@ public class MockPackageManager extends PackageManager {
     }
 
     @Override
-    public void setIncognitoModeSetting(String packageName, boolean enabled) {
+    public void setPrivacyGuardSetting(String packageName, boolean enabled) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean getIncognitoModeSetting(String packageName) {
+    public boolean getPrivacyGuardSetting(String packageName) {
         throw new UnsupportedOperationException();
     }
 

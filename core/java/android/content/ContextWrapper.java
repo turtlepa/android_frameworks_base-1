@@ -496,8 +496,8 @@ public class ContextWrapper extends Context {
     }
 
     @Override
-    public boolean isIncognito() {
-        return mBase.isIncognito();
+    public boolean isPrivacyGuardEnabled() {
+        return mBase.isPrivacyGuardEnabled();
     }
 
     @Override

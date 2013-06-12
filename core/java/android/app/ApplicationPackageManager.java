@@ -1298,18 +1298,18 @@ final class ApplicationPackageManager extends PackageManager {
     }
 
     @Override
-    public void setIncognitoModeSetting(String packageName, boolean enabled) {
+    public void setPrivacyGuardSetting(String packageName, boolean enabled) {
         try {
-            mPM.setIncognitoModeSetting(packageName, enabled, mContext.getUserId());
+            mPM.setPrivacyGuardSetting(packageName, enabled, mContext.getUserId());
         } catch (RemoteException e) {
             // Should never happen!
         }
     }
 
     @Override
-    public boolean getIncognitoModeSetting(String packageName) {
+    public boolean getPrivacyGuardSetting(String packageName) {
         try {
-            return mPM.getIncognitoModeSetting(packageName, mContext.getUserId());
+            return mPM.getPrivacyGuardSetting(packageName, mContext.getUserId());
         } catch (RemoteException e) {
             // Should never happen!
         }

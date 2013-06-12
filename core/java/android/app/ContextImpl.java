@@ -1550,9 +1550,9 @@ class ContextImpl extends Context {
     }
 
     @Override
-    public boolean isIncognito() {
+    public boolean isPrivacyGuardEnabled() {
         try {
-            return ActivityManagerNative.getDefault().isProcessIncognito(Binder.getCallingPid());
+            return ActivityManagerNative.getDefault().isPrivacyGuardEnabledForProcess(Binder.getCallingPid());
         } catch (RemoteException e) {
             Log.e(TAG, e.getMessage(), e);
         }
