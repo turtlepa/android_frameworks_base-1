@@ -416,10 +416,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         mPieContainer = null;
     }
 
-    public void attachStatusBar(BaseStatusBar statusBar) {
-        mStatusBar = statusBar;
-    }
-
     private void setupListener() {
         ContentResolver resolver = mContext.getContentResolver();
 
@@ -539,12 +535,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         lp.windowAnimations = android.R.style.Animation;
         lp.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_BEHIND;
         return lp;
-    }
-
-    @Override
-    public void onExit() {
-        mWindowManager.removeView(mPieContainer);
-        mPieActivationListener.restoreListenerState();
     }
 
     public void updatePieTriggerMask(int newMask) {
