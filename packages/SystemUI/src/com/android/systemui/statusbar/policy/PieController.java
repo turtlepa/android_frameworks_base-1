@@ -103,6 +103,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
     private Context mContext;
     private PieManager mPieManager;
     private PieView mPieContainer;
+    private boolean mIsDetaching = false;
     /**
      * This is only needed for #toggleRecentApps() and #showSearchPanel()
      */
@@ -127,6 +128,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
     private Drawable mBackIcon;
     private Drawable mBackAltIcon;
 
+    protected int mExpandedDesktopState;
     private int mPieTriggerSlots;
     private int mPieTriggerMask = PiePosition.LEFT.FLAG
             | PiePosition.BOTTOM.FLAG
@@ -145,10 +147,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 // restore listener state immediately (after the bookkeeping), and since the
                 // search panel is a single gesture we will not trigger again
                 mHandler.obtainMessage(MSG_PIE_RESTORE_LISTENER_STATE).sendToTarget();
-            } else if (mPieContainer != null) {
-                // set the snap points depending on current trigger and mask
-                mPieContainer.setSnapPoints(mPieTriggerMask & ~mPieTriggerSlots);
-                activateFromListener(touchX, touchY, position);
+            } else if (mPieContainer != null && activateFromListener(touchX, touchY, position)) {
                 // give the main thread some time to do the bookkeeping
                 mHandler.obtainMessage(MSG_PIE_GAIN_FOCUS).sendToTarget();
             } else {
@@ -274,18 +273,31 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         }
 
         @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (uri == null || mNavButtonsUri.equals(uri)
-                    || mKillAppLongpressBackUri.equals(uri)) {
+        public void onChange(boolean selfChange) {
+            ContentResolver resolver = mContext.getContentResolver();
+            boolean expanded = Settings.System.getInt(resolver,
+                    Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1;
+            if (expanded) {
+                mExpandedDesktopState = Settings.System.getInt(resolver,
+                        Settings.System.EXPANDED_DESKTOP_STYLE, 0);
+            } else {
+                mExpandedDesktopState = 0;
+            }
+            if (isEnabled()) {
+                setupContainer();
                 setupNavigationItems();
                 setupListener();
-            } else {
+            } else if (!isShowing()) {
                 detachContainer();
+            } else {
+                // delay detach to #onExit()
+                mIsDetaching = true;
             }
             setupListener();
         }
     }
-    private SettingsObserver mSettingsObserver;
+
+    private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -331,10 +343,13 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
 
         mPieManager.setPieActivationListener(mPieActivationListener);
 
-        // start listening for pie control changes
-        // (this calls setupContainer, setupListener & setupNavigationItems if appropriate)
-        mPieControlObserver.observe();
-        mPieControlObserver.onChange(true);
+        // start listening for changes (calls setupListener & setupNavigationItems)
+        mSettingsObserver.observe();
+        mSettingsObserver.onChange(true);
+    }
+
+    public void attachStatusBar(BaseStatusBar statusBar) {
+        mStatusBar = statusBar;
     }
 
     private void setupContainer() {
@@ -371,6 +386,16 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         mSysInfo = new PieSysInfo(mContext, mPieContainer, this, PieDrawable.DISPLAY_NOT_AT_TOP);
         mSysInfo.setGeometry(START_ANGLE, 180 - 2 * EMPTY_ANGLE, inner, outer);
         mPieContainer.addSlice(mSysInfo);
+    }
+
+    @Override
+    public void onExit() {
+        mWindowManager.removeView(mPieContainer);
+        mPieActivationListener.restoreListenerState();
+        if (mIsDetaching) {
+            detachContainer();
+            mIsDetaching = false;
+        }
     }
 
     private void detachContainer() {
@@ -482,15 +507,20 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         }
     }
 
-    public void activateFromListener(int touchX, int touchY, PiePosition position) {
-        if (!isShowing()) {
-            doHapticTriggerFeedback();
-
-            mPosition = position;
-            Point center = new Point(touchX, touchY);
-            mPieContainer.activate(center, position);
-            mWindowManager.addView(mPieContainer, generateLayoutParam());
+    public boolean activateFromListener(int touchX, int touchY, PiePosition position) {
+        if (isShowing()) {
+            return false;
         }
+
+        doHapticTriggerFeedback();
+
+        mPosition = position;
+        Point center = new Point(touchX, touchY);
+        mPieContainer.setSnapPoints(mPieTriggerMask & ~mPieTriggerSlots);
+        mPieContainer.activate(center, position);
+        mWindowManager.addView(mPieContainer, generateLayoutParam());
+
+        return true;
     }
 
     private WindowManager.LayoutParams generateLayoutParam() {
@@ -503,6 +533,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 PixelFormat.TRANSLUCENT);
+        lp.privateFlags = WindowManager.LayoutParams.PRIVATE_FLAG_FORCE_SHOW_NAV_BAR;
         // This title is for debugging only. See: dumpsys window
         lp.setTitle("PieControlPanel");
         lp.windowAnimations = android.R.style.Animation;
@@ -520,8 +551,8 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         int oldState = mPieTriggerSlots & mPieTriggerMask;
         mPieTriggerMask = newMask;
 
-        // first we check, if it would make a change
-        if ((mPieTriggerSlots & mPieTriggerMask) != oldState) {
+        // check if we are active and if it would make a change at all
+        if (mPieContainer != null && ((mPieTriggerSlots & mPieTriggerMask) != oldState)) {
             setupListener();
         }
     }
@@ -723,19 +754,10 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
     }
 
     public boolean isEnabled() {
-        ContentResolver resolver = mContext.getContentResolver();
-
-        int pie = Settings.System.getInt(resolver,
+        int pie = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_CONTROLS, 0);
-        boolean expanded = Settings.System.getInt(resolver,
-                Settings.System.EXPANDED_DESKTOP_STATE, 0) == 1;
 
-        if (pie != 0 && expanded) {
-            return (pie == 1 && Settings.System.getInt(resolver,
-                    Settings.System.EXPANDED_DESKTOP_STYLE, 0) != 0) || pie == 2;
-        } else {
-            return false;
-        }
+        return (pie == 1 && mExpandedDesktopState != 0) || pie == 2;
     }
 
     public String getOperatorState() {

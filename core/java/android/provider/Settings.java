@@ -1787,16 +1787,10 @@ public final class Settings {
         public static final String AUTO_BRIGHTNESS_RESPONSIVENESS = "auto_brightness_responsiveness";
 
         /**
-         * Whether to enable the electron beam animation when turning screen on
-         *
-         * @hide */
-        public static final String ELECTRON_BEAM_ANIMATION_ON = "electron_beam_animation_on";
-
-        /**
          * Whether to enable the electron beam animation when turning screen off
          *
          * @hide */
-        public static final String ELECTRON_BEAM_ANIMATION_OFF = "electron_beam_animation_off";
+        public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
 
         /**
          * Control whether the process CPU usage meter should be shown.
@@ -2861,6 +2855,12 @@ public final class Settings {
          * @hide
          */
         public static final String MENU_UNLOCK_SCREEN = "menu_unlock_screen";
+
+        /**
+         * Whether to wake the screen with the home key, the value is boolean.
+         * @hide
+         */
+        public static final String HOME_WAKE_SCREEN = "home_wake_screen";
 
         /**
          * Whether to wake the screen with the volume keys, the value is boolean.
