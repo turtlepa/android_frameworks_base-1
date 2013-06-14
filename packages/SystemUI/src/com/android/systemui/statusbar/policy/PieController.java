@@ -33,7 +33,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.hardware.input.InputManager;
-import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -202,8 +201,8 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         mHandler.sendMessageDelayed(Message.obtain(mHandler, MSG_INJECT_KEY_UP, up), 30);
     }
 
-    private final class PieControlObserver extends ContentObserver {
-        PieControlObserver(Handler handler) {
+    private final class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
             super(handler);
         }
 
@@ -223,53 +222,11 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                     Settings.System.EXPANDED_DESKTOP_STATE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.EXPANDED_DESKTOP_STYLE), false, this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            if (isEnabled()) {
-                // this is the only place pie controls gets enabled
-                setupContainer();
-                if (mSettingsObserver == null) {
-                    mSettingsObserver = new SettingsObserver(mHandler);
-                }
-                mSettingsObserver.observe();
-                mSettingsObserver.onChange(true, null);
-            } else {
-                if (mSettingsObserver != null) {
-                    mSettingsObserver.unobserve();
-                }
-                detachContainer();
-            }
-        }
-    }
-    private PieControlObserver mPieControlObserver = new PieControlObserver(mHandler);
-
-    private final class SettingsObserver extends ContentObserver {
-        private final Uri mNavButtonsUri = Settings.System.getUriFor(
-                Settings.System.NAV_BUTTONS);
-        private final Uri mKillAppLongpressBackUri = Settings.Secure.getUriFor(
-                Settings.Secure.KILL_APP_LONGPRESS_BACK);
-
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            // trigger setupNavigationItems()
-            resolver.registerContentObserver(mNavButtonsUri, false, this);
-            resolver.registerContentObserver(mKillAppLongpressBackUri, false, this);
             // trigger setupListener()
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PIE_POSITIONS), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PIE_SENSITIVITY), false, this);
-        }
-
-        void unobserve() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.unregisterContentObserver(this);
         }
 
         @Override
@@ -293,7 +250,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 // delay detach to #onExit()
                 mIsDetaching = true;
             }
-            setupListener();
         }
     }
 
@@ -404,7 +360,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
         }
 
         mPieManager.updatePieActivationListener(mPieActivationListener, 0);
-        mPieActivationListener.restoreListenerState();
 
         if (mTelephonyManager != null) {
             mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
@@ -452,7 +407,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                     // search light has a width of 6 to take the complete space that normally
                     // BACK HOME RECENT would occupy
                     mSearchLight = constructItem(6, SEARCHLIGHT, SEARCHLIGHT.portResource,
-                            minimumImageSize, false, colorSettings);
+                            SEARCHLIGHT.portResource, minimumImageSize, false, colorSettings);
                     mNavigationSlice.addItem(mSearchLight);
                 }
 
@@ -492,7 +447,6 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                 return item;
             }
         }
-
         return null;
     }
 
