@@ -407,7 +407,7 @@ public class PieController implements BaseStatusBar.NavigationBarCallback, PieVi
                     // search light has a width of 6 to take the complete space that normally
                     // BACK HOME RECENT would occupy
                     mSearchLight = constructItem(6, SEARCHLIGHT, SEARCHLIGHT.portResource,
-                            SEARCHLIGHT.portResource, minimumImageSize, false, colorSettings);
+                            minimumImageSize, false, colorSettings);
                     mNavigationSlice.addItem(mSearchLight);
                 }
 
