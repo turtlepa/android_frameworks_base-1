@@ -672,45 +672,31 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ON_SCREEN_BUTTONS_HEIGHT), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.ON_SCREEN_BUTTONS_HEIGHT), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ON_SCREEN_BUTTONS_WIDTH), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.ON_SCREEN_BUTTONS_WIDTH), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_HOME_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_HOME_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_HOME_LONG_PRESS_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_HOME_LONG_PRESS_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_BACK_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_BACK_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_BACK_LONG_PRESS_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_BACK_LONG_PRESS_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_MENU_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_MENU_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_MENU_LONG_PRESS_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_MENU_LONG_PRESS_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_ASSIST_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_ASSIST_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_ASSIST_LONG_PRESS_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_ASSIST_LONG_PRESS_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_APP_SWITCH_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_APP_SWITCH_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this),
-                    UserHandle.USER_ALL);
+                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HARDWARE_KEY_REBINDING), false, this),
-                    UserHandle.USER_ALL);
-
+                    Settings.System.HARDWARE_KEY_REBINDING), false, this);
             updateSettings();
         }
 
