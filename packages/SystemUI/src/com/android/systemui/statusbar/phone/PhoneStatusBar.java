@@ -2310,7 +2310,8 @@ public class PhoneStatusBar extends BaseStatusBar {
             final View dockBattery2 = mStatusBarView.findViewById(R.id.dock_battery_text);
             final View dockBattery3 = mStatusBarView.findViewById(R.id.circle_dock_battery);
             final View clock = mStatusBarView.findViewById(R.id.clock);
-	    final View cclock = mStatusBarView.findViewById(R.id.center_clock);
+            final View traffic = mStatusBarView.findViewById(R.id.traffic);
+            final View cclock = mStatusBarView.findViewById(R.id.center_clock);
 
             List<ObjectAnimator> lightsOutObjs = new ArrayList<ObjectAnimator>();
             lightsOutObjs.add(ObjectAnimator.ofFloat(notifications, View.ALPHA, 0));
@@ -2320,6 +2321,7 @@ public class PhoneStatusBar extends BaseStatusBar {
             lightsOutObjs.add(ObjectAnimator.ofFloat(battery, View.ALPHA, 0.5f));
             lightsOutObjs.add(ObjectAnimator.ofFloat(battery2, View.ALPHA, 0.5f));
             lightsOutObjs.add(ObjectAnimator.ofFloat(battery3, View.ALPHA, 0.5f));
+            lightsOutObjs.add(ObjectAnimator.ofFloat(traffic, View.ALPHA, 0.5f));
             if (dockBattery != null) {
                 lightsOutObjs.add(ObjectAnimator.ofFloat(dockBattery, View.ALPHA, 0.5f));
             }
@@ -2341,6 +2343,7 @@ public class PhoneStatusBar extends BaseStatusBar {
             lightsOnObjs.add(ObjectAnimator.ofFloat(battery, View.ALPHA, 1));
             lightsOnObjs.add(ObjectAnimator.ofFloat(battery2, View.ALPHA, 1));
             lightsOnObjs.add(ObjectAnimator.ofFloat(battery3, View.ALPHA, 1));
+            lightsOnObjs.add(ObjectAnimator.ofFloat(traffic, View.ALPHA, 1));
             if (dockBattery != null) {
                 lightsOnObjs.add(ObjectAnimator.ofFloat(dockBattery, View.ALPHA, 1));
             }
@@ -2356,11 +2359,13 @@ public class PhoneStatusBar extends BaseStatusBar {
 
             final AnimatorSet lightsOutAnim = new AnimatorSet();
             lightsOutAnim.playTogether(
+
                     lightsOutObjs.toArray(new ObjectAnimator[lightsOutObjs.size()]));
             lightsOutAnim.setDuration(750);
 
             final AnimatorSet lightsOnAnim = new AnimatorSet();
             lightsOnAnim.playTogether(
+
                     lightsOnObjs.toArray(new ObjectAnimator[lightsOnObjs.size()]));
             lightsOnAnim.setDuration(250);
 
