@@ -2992,6 +2992,12 @@ public final class Settings {
          */
         public static final String STATUS_BAR_ALPHA = "status_bar_alpha";
 
+	/**
+         * Do you want popups/floating windows?
+         * @hide
+         */
+        public static final String WE_WANT_POPUPS = "we_want_popups";
+
         /**
          * Sets transparency mode of statusbar
          * 0 = only home, 1 = keyguard and home (default), 2 = always
