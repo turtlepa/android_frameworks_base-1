@@ -34,6 +34,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.provider.Settings;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -5068,7 +5069,9 @@ public class Activity extends ContextThemeWrapper
         mFragments.attachActivity(this, mContainer, null);
         
         boolean floating = (intent.getFlags()&Intent.FLAG_FLOATING_WINDOW) == Intent.FLAG_FLOATING_WINDOW;
-        if (intent != null && floating) {
+        boolean mWeWantPopups = (Settings.System.getInt(getContentResolver(), Settings.System.WE_WANT_POPUPS, 0) == 1);
+
+        if ((intent != null) && floating && mWeWantPopups) {
             TypedArray styleArray = context.obtainStyledAttributes(info.theme, com.android.internal.R.styleable.Window);
             TypedValue backgroundValue = styleArray.peekValue(com.android.internal.R.styleable.Window_windowBackground);
 
