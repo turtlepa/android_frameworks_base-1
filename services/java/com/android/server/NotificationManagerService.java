@@ -178,26 +178,26 @@ public class NotificationManagerService extends INotificationManager.Stub
     private long mAnnoyingNotificationThreshold = -1;
 
     // Notification control database. For now just contains disabled packages.
-    private AtomicFile mPolicyFile, mHaloPolicyFile; 
+    private AtomicFile mPolicyFile, mHaloPolicyFile;
     private HashSet<String> mBlockedPackages = new HashSet<String>();
     private HashSet<String> mHaloBlacklist = new HashSet<String>();
     private HashSet<String> mHaloWhitelist = new HashSet<String>();
-    private boolean mHaloPolicyisBlack = true; 
+    private boolean mHaloPolicyisBlack = true;
 
     private static final int DB_VERSION = 1;
 
     private static final String TAG_BODY = "notification-policy";
     private static final String ATTR_VERSION = "version";
-    private static final String ATTR_HALO_POLICY_IS_BLACK = "policy_is_black"; 
+    private static final String ATTR_HALO_POLICY_IS_BLACK = "policy_is_black";
  
-    private static final String TAG_ALLOWED_PKGS = "allowed-packages"; 
+    private static final String TAG_ALLOWED_PKGS = "allowed-packages";
     private static final String TAG_BLOCKED_PKGS = "blocked-packages";
     private static final String TAG_PACKAGE = "package";
     private static final String ATTR_NAME = "name";
 
     private int readPolicy(AtomicFile file, String lookUpTag, HashSet<String> db) {
         return readPolicy(file, lookUpTag, db, null, 0);
-    } 
+    }
 
     private int readPolicy(AtomicFile file, String lookUpTag, HashSet<String> db, String resultTag, int defaultResult) {
         int result = defaultResult;
@@ -225,7 +225,7 @@ public class NotificationManagerService extends INotificationManager.Stub
                             if (TAG_PACKAGE.equals(tag)) {
                                 db.add(parser.getAttributeValue(null, ATTR_NAME));
                             } else if (lookUpTag.equals(tag) && type == END_TAG) {
-                                break; 
+                                break;
                             }
                         }
                     }
@@ -255,7 +255,7 @@ public class NotificationManagerService extends INotificationManager.Stub
             mHaloBlacklist.clear();
             mHaloPolicyisBlack = readPolicy(mHaloPolicyFile, TAG_BLOCKED_PKGS, mHaloBlacklist, ATTR_HALO_POLICY_IS_BLACK, 1) == 1;
             mHaloWhitelist.clear();
-            readPolicy(mHaloPolicyFile, TAG_ALLOWED_PKGS, mHaloWhitelist); 
+            readPolicy(mHaloPolicyFile, TAG_ALLOWED_PKGS, mHaloWhitelist);
         }
     }
 
@@ -376,7 +376,7 @@ public class NotificationManagerService extends INotificationManager.Stub
         } else {
             return mHaloWhitelist.contains(pkg);
         }
-    } 
+    }
 
     public boolean areNotificationsEnabledForPackage(String pkg) {
         checkCallerIsSystem();
@@ -842,7 +842,7 @@ public class NotificationManagerService extends INotificationManager.Stub
         mHandler = new WorkerHandler();
 
         loadBlockDb();
-	loadHaloBlockDb();  
+	loadHaloBlockDb();
 
         mStatusBar = statusBar;
         statusBar.setNotificationCallbacks(mNotificationCallbacks);
