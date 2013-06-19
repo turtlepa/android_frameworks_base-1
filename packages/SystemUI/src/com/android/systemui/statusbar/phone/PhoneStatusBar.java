@@ -177,9 +177,6 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     PhoneStatusBarPolicy mIconPolicy;
 
-    private AppSidebar mAppSidebar;
-    private int mSidebarPosition;
-
     private boolean mUseCenterClock = false;
 
     private static Boolean mIsDevicePhone = null;
@@ -614,12 +611,9 @@ public class PhoneStatusBar extends BaseStatusBar {
         }
 
         if (mRecreating) {
-           if (mAppSidebar != null)
-               mWindowManager.removeView(mAppSidebar);
-	}
-
-        mAppSidebar = (AppSidebar)View.inflate(context, R.layout.app_sidebar, null);
-        mWindowManager.addView(mAppSidebar, getAppSidebarLayoutParams(mSidebarPosition));
+            removeSidebarView();
+        }
+        addSidebarView();
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
@@ -1159,26 +1153,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
         mWindowManager.addView(mIntruderAlertView, lp);
     }
-
-    private WindowManager.LayoutParams getAppSidebarLayoutParams(int position) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL,
-                0
-                | WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
-                | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
-                PixelFormat.TRANSLUCENT);
-        lp.gravity = Gravity.BOTTOM;// | Gravity.FILL_VERTICAL;
-        lp.gravity |= position == AppSidebar.SIDEBAR_POSITION_LEFT ? Gravity.LEFT : Gravity.RIGHT;
-        lp.setTitle("AppSidebar");
-
-        return lp;
-    }
-
+    
     @Override
     public void addIcon(String slot, int index, int viewIndex, StatusBarIcon icon) {
         if (SPEW) Slog.d(TAG, "addIcon slot=" + slot + " index=" + index + " viewIndex=" + viewIndex
