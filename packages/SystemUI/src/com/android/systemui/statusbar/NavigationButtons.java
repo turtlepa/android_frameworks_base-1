@@ -96,6 +96,11 @@ public class NavigationButtons {
             sideResource = sR;
             this.key = key;
         }
+
+        @Override
+        public String toString() {
+            return "ButtonInfo[" + key + "]";
+        }
     }
 
     // Available buttons string constants
