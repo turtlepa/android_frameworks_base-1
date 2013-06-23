@@ -62,7 +62,7 @@ public class DockBatteryController extends BatteryController {
         }
 
         for (DockBatteryStateChangeCallback cb : mChangeCallbacks) {
-            cb.onDockBatteryLevelChanged(mBatteryLevel, isBatteryPresent(), isBatteryStatusCharging());
+            cb.onDockBatteryLevelChanged(getBatteryLevel(), isBatteryPresent(), getBatteryStatus());
         }
     }
 
@@ -70,11 +70,13 @@ public class DockBatteryController extends BatteryController {
             new ArrayList<DockBatteryStateChangeCallback>();
 
     public interface DockBatteryStateChangeCallback {
-        public void onDockBatteryLevelChanged(int level, boolean present, boolean pluggedIn);
+        public void onDockBatteryLevelChanged(int level, boolean present, int status);
     }
 
     public void addStateChangedCallback(DockBatteryStateChangeCallback cb) {
         mChangeCallbacks.add(cb);
+        // trigger initial update
+        cb.onDockBatteryLevelChanged(getBatteryLevel(), isBatteryPresent(), getBatteryStatus());
     }
 
     public void removeStateChangedCallback(DockBatteryStateChangeCallback cb) {
@@ -103,13 +105,13 @@ public class DockBatteryController extends BatteryController {
     }
 
     @Override
-    protected int getBatteryStatus() {
-        return mDockBatteryStatus;
+    protected int getBatteryLevel() {
+        return mBatteryLevel;
     }
 
     @Override
-    public int getBatteryLevel() {
-        return mBatteryLevel;
+    protected int getBatteryStatus() {
+        return mDockBatteryStatus;
     }
 
     @Override
