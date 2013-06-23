@@ -24,6 +24,7 @@ import com.android.systemui.statusbar.phone.QuickSettingsTileView;
 public class QuickSettingsTile implements OnClickListener {
 
     protected final Context mContext;
+    protected QuickSettingsContainerView mContainer;
     protected QuickSettingsTileView mTile;
     protected OnClickListener mOnClick;
     protected OnLongClickListener mOnLongClick;
@@ -50,7 +51,8 @@ public class QuickSettingsTile implements OnClickListener {
     public void setupQuickSettingsTile(LayoutInflater inflater, QuickSettingsContainerView container) {
         mTile = (QuickSettingsTileView) inflater.inflate(R.layout.quick_settings_tile, container, false);
         mTile.setContent(mTileLayout, inflater);
-        container.addView(mTile);
+        mContainer = container;
+        mContainer.addView(mTile);
         onPostCreate();
         updateQuickSettings();
         mTile.setOnClickListener(this);
@@ -101,8 +103,11 @@ public class QuickSettingsTile implements OnClickListener {
     }
 
     @Override
-    public final void onClick(View v) {
-        if (mOnClick != null) mOnClick.onClick(v);
+    public void onClick(View v) {
+        if (mOnClick != null) {
+            mOnClick.onClick(v);
+        }
+
         ContentResolver resolver = mContext.getContentResolver();
         boolean shouldCollapse = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_COLLAPSE_PANEL, 0, UserHandle.USER_CURRENT) == 1;
