@@ -3258,6 +3258,12 @@ public final class Settings {
          * @hide
          */
         public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
+                
+        /**
+         * Do you want popups/floating windows?
+         * @hide
+         */
+        public static final String WE_WANT_POPUPS = "we_want_popups";
 
         /**
          * @hide
