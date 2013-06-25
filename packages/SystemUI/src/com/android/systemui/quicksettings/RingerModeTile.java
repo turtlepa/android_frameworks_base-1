@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.UserHandle;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -147,8 +146,8 @@ public class RingerModeTile extends QuickSettingsTile {
     }
 
     private void updateSettings(ContentResolver resolver) {
-        String[] modes = parseStoredValue(Settings.System.getStringForUser(
-                resolver, Settings.System.EXPANDED_RING_MODE, UserHandle.USER_CURRENT));
+        String[] modes = parseStoredValue(Settings.System.getString(
+                resolver, Settings.System.EXPANDED_RING_MODE));
         if (modes == null || modes.length == 0) {
             mRingerValues = new int[] {
                     0, 1, 2, 3
@@ -163,8 +162,8 @@ public class RingerModeTile extends QuickSettingsTile {
 
     private void findCurrentState() {
         ContentResolver resolver = mContext.getContentResolver();
-        boolean vibrateWhenRinging = Settings.System.getIntForUser(resolver,
-                Settings.System.VIBRATE_WHEN_RINGING, 0, UserHandle.USER_CURRENT) == 1;
+        boolean vibrateWhenRinging = Settings.System.getInt(resolver,
+                Settings.System.VIBRATE_WHEN_RINGING, 0) == 1;
         int ringerMode = mAudioManager.getRingerMode();
 
         Ringer ringer = new Ringer(ringerMode, vibrateWhenRinging);
@@ -194,8 +193,8 @@ public class RingerModeTile extends QuickSettingsTile {
 
             // Set the desired state
             ContentResolver resolver = context.getContentResolver();
-            Settings.System.putIntForUser(resolver, Settings.System.VIBRATE_WHEN_RINGING,
-                    mVibrateWhenRinging ? 1 : 0, UserHandle.USER_CURRENT);
+            Settings.System.putInt(resolver, Settings.System.VIBRATE_WHEN_RINGING,
+                    (mVibrateWhenRinging ? 1 : 0));
             mAudioManager.setRingerMode(mRingerMode);
         }
 
