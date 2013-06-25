@@ -2512,6 +2512,7 @@ public final class Settings {
 
         /**
          * Torch state (flashlight)
+         * FIXME: move me to global state
          * @hide
          */
         public static final String TORCH_STATE = "torch_state";
@@ -5448,6 +5449,12 @@ public final class Settings {
          * @hide
          */
         public static final String ADVANCED_REBOOT = "advanced_reboot";
+
+        /**
+         * Whether newly installed apps should run with privacy guard by default
+         * @hide
+         */
+        public static final String PRIVACY_GUARD_DEFAULT = "privacy_guard_default";
 
         /**
          * Whether newly installed apps should run with privacy guard by default

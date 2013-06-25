@@ -23,6 +23,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.os.Handler;
+<<<<<<< HEAD
+=======
+import android.os.UserHandle;
+import android.provider.AlarmClock;
+>>>>>>> ee0783a5c1f97ac763a74d0cc7a28cd9f9e4eac3
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -74,9 +79,20 @@ public class Clock extends TextView {
     private String mClockFormatString;
     private SimpleDateFormat mClockFormat;
     private Locale mLocale;
+<<<<<<< HEAD
 
     private int mAmPmStyle = AM_PM_STYLE_GONE;
     public boolean mShowClock;
+=======
+    private SettingsObserver mObserver;
+    private boolean mHidden;
+
+    private static final int AM_PM_STYLE_NORMAL  = 0;
+    private static final int AM_PM_STYLE_SMALL   = 1;
+    private static final int AM_PM_STYLE_GONE    = 2;
+
+    private int mAmPmStyle = AM_PM_STYLE_GONE;
+>>>>>>> ee0783a5c1f97ac763a74d0cc7a28cd9f9e4eac3
 
     private SettingsObserver mSettingsObserver;
 
@@ -127,6 +143,11 @@ public class Clock extends TextView {
 
     public Clock(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public void setHidden(boolean hidden) {
+        mHidden = hidden;
+        updateVisibility();
     }
 
     @Override
@@ -307,6 +328,7 @@ public class Clock extends TextView {
         return formatted;
     }
 
+<<<<<<< HEAD
     protected void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
         int defaultColor = getResources().getColor(
@@ -317,6 +339,11 @@ public class Clock extends TextView {
 
         int amPmStyle = Settings.System.getInt(resolver,
                     Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, AM_PM_STYLE_GONE);
+=======
+    public void updateSettings() {
+        int amPmStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_AM_PM, 2, UserHandle.USER_CURRENT);
+>>>>>>> ee0783a5c1f97ac763a74d0cc7a28cd9f9e4eac3
 
         if (mAmPmStyle != amPmStyle) {
             mAmPmStyle = amPmStyle;
@@ -327,6 +354,7 @@ public class Clock extends TextView {
             }
         }
 
+<<<<<<< HEAD
         mClockStyle = Settings.System.getInt(resolver,
                 Settings.System.STATUSBAR_CLOCK_STYLE, STYLE_CLOCK_RIGHT);
         mClockDateDisplay = Settings.System.getInt(resolver,
@@ -350,6 +378,15 @@ public class Clock extends TextView {
             setVisibility(View.VISIBLE);
         else
             setVisibility(View.GONE);
+=======
+        updateVisibility();
+    }
+
+    private void updateVisibility() {
+        boolean showClock = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CLOCK, 1, UserHandle.USER_CURRENT) == 1;
+        setVisibility(showClock && !mHidden ? View.VISIBLE : View.GONE);
+>>>>>>> ee0783a5c1f97ac763a74d0cc7a28cd9f9e4eac3
     }
 }
 
