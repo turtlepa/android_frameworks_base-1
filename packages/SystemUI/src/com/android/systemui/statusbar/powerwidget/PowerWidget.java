@@ -26,7 +26,6 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.net.wimax.WimaxHelper;
 import android.os.Handler;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -201,8 +200,7 @@ public class PowerWidget extends FrameLayout {
 
         Log.i(TAG, "Setting up widget");
 
-        String buttons = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.WIDGET_BUTTONS, UserHandle.USER_CURRENT);
+        String buttons = Settings.System.getString(mContext.getContentResolver(), Settings.System.WIDGET_BUTTONS);
         if (buttons == null) {
             Log.i(TAG, "Default buttons being loaded");
             buttons = BUTTONS_DEFAULT;
@@ -452,8 +450,8 @@ public class PowerWidget extends FrameLayout {
 
     public void updateVisibility() {
         // now check if we need to display the widget still
-        boolean displayPowerWidget = Settings.System.getIntForUser(mContext.getContentResolver(),
-                   Settings.System.EXPANDED_VIEW_WIDGET, 0, UserHandle.USER_CURRENT) == 1;
+        boolean displayPowerWidget = Settings.System.getInt(mContext.getContentResolver(),
+                   Settings.System.EXPANDED_VIEW_WIDGET, 0) == 1;
         if(!displayPowerWidget) {
             setVisibility(View.GONE);
         } else {
@@ -463,8 +461,8 @@ public class PowerWidget extends FrameLayout {
 
     private void updateScrollbar() {
         if (mScrollView == null) return;
-        boolean hideScrollBar = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.EXPANDED_HIDE_SCROLLBAR, 0, UserHandle.USER_CURRENT) == 1;
+        boolean hideScrollBar = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.EXPANDED_HIDE_SCROLLBAR, 0) == 1;
         mScrollView.setHorizontalScrollBarEnabled(!hideScrollBar);
 
         // set the padding on the linear layout to the size of our scrollbar,
@@ -479,14 +477,14 @@ public class PowerWidget extends FrameLayout {
 
     private void updateHapticFeedbackSetting() {
         ContentResolver cr = mContext.getContentResolver();
-        int expandedHapticFeedback = Settings.System.getIntForUser(cr,
-                Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2, UserHandle.USER_CURRENT);
+        int expandedHapticFeedback = Settings.System.getInt(cr,
+                Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2);
         long[] clickPattern = null, longClickPattern = null;
         boolean hapticFeedback;
 
         if (expandedHapticFeedback == 2) {
-             hapticFeedback = Settings.System.getIntForUser(cr,
-                     Settings.System.HAPTIC_FEEDBACK_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
+             hapticFeedback = Settings.System.getInt(cr,
+                     Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) == 1;
         } else {
             hapticFeedback = (expandedHapticFeedback == 1);
         }

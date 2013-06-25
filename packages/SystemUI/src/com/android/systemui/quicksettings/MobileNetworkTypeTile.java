@@ -2,7 +2,6 @@ package com.android.systemui.quicksettings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
@@ -207,9 +206,9 @@ public class MobileNetworkTypeTile extends QuickSettingsTile implements NetworkS
     }
 
     private int getCurrentCMMode() {
-        return Settings.System.getIntForUser(mContext.getContentResolver(),
+        return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.EXPANDED_NETWORK_MODE,
-                CM_MODE_3G2G, UserHandle.USER_CURRENT);
+                CM_MODE_3G2G);
     }
 
     @Override

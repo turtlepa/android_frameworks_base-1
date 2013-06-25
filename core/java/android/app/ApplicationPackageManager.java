@@ -1299,7 +1299,6 @@ final class ApplicationPackageManager extends PackageManager {
         return PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
     }
 
-<<<<<<< HEAD
     @CosHook(CosHook.CosHookType.NEW_METHOD)
     @Override
     public String[] getRevokedPermissions(String packageName) {
@@ -1320,8 +1319,6 @@ final class ApplicationPackageManager extends PackageManager {
             // Should never happen!
         }
 
-=======
->>>>>>> ee0783a5c1f97ac763a74d0cc7a28cd9f9e4eac3
     @Override
     public void setPrivacyGuardSetting(String packageName, boolean enabled) {
         try {

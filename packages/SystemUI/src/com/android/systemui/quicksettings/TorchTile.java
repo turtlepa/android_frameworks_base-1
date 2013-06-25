@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,10 +53,10 @@ public class TorchTile extends QuickSettingsTile {
     }
 
     private synchronized void updateTile() {
-        boolean enabled = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.TORCH_STATE, 0, UserHandle.USER_CURRENT) == 1;
+        boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.TORCH_STATE, 0) == 1;
 
-        if (enabled) {
+        if(enabled) {
             mDrawable = R.drawable.ic_qs_torch_on;
             mLabel = mContext.getString(R.string.quick_settings_torch);
         } else {
