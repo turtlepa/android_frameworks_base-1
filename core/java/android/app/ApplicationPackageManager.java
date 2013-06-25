@@ -1319,6 +1319,8 @@ final class ApplicationPackageManager extends PackageManager {
             // Should never happen!
         }
 
+    }
+
     @Override
     public void setPrivacyGuardSetting(String packageName, boolean enabled) {
         try {
