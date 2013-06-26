@@ -495,7 +495,6 @@ public class ContextWrapper extends Context {
         return mBase.getSystemService(name);
     }
 
-    /** @hide */
     @Override
     public boolean isPrivacyGuardEnabled() {
         return mBase.isPrivacyGuardEnabled();
