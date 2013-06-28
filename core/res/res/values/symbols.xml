@@ -2048,5 +2048,10 @@
   <java-symbol type="string" name="privacy_guard_notification_detail" />
   <java-symbol type="drawable" name="stat_notify_privacy_guard" />
 
+  <!-- Custom Default Wallpaper -->
   <java-symbol type="drawable" name="cm_default_wallpaper" />
+
+  <!-- Screenshot Trash -->
+  <java-symbol type="string" name="trash" />
+
 </resources>
