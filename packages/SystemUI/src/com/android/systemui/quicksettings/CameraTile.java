@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -55,6 +56,7 @@ public class CameraTile extends QuickSettingsTile {
     private Camera mCamera;
     private CameraOrientationListener mCameraOrientationListener = null;
     private int mOrientation;
+    private int mJpegRotation;
     private int mDisplayRotation;
     private Camera.Size mCameraSize;
     private boolean mCameraStarted;
@@ -122,7 +124,6 @@ public class CameraTile extends QuickSettingsTile {
             }
 
             mCamera.setParameters(mParams);
-
             updateOrientation();
 
             mHandler.postDelayed(new Runnable() {
@@ -175,16 +176,14 @@ public class CameraTile extends QuickSettingsTile {
                 }
             });
 
-            // Update the JPEG rotation
-            final int rotation;
-
+            // Update the JPEG rotation\
             if (mCameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                rotation = (mCameraInfo.orientation - mOrientation + 360) % 360;
+                mJpegRotation = (mCameraInfo.orientation - mOrientation + 360) % 360;
             } else {
-                rotation = (mCameraInfo.orientation + mOrientation) % 360;
+                mJpegRotation = (mCameraInfo.orientation + mOrientation) % 360;
             }
 
-            mParams.setRotation(rotation);
+            mParams.setRotation(mJpegRotation);
             mCamera.setParameters(mParams);
 
             // Request a picture
@@ -195,12 +194,13 @@ public class CameraTile extends QuickSettingsTile {
                         mCameraBusy = false;
 
                         long time = System.currentTimeMillis();
+
                         int orientation = (mOrientation + mDisplayRotation) % 360;
 
                         mStorage.addImage(mContext.getContentResolver(),
                                 mImageNameFormatter.format(new Date(time)),
-                                time, orientation, data,
-                                mCameraSize.width, mCameraSize.height);
+                                time, orientation, data, mCameraSize.width,
+                                mCameraSize.height);
 
                         mCamera.startPreview();
                     }
@@ -387,11 +387,9 @@ public class CameraTile extends QuickSettingsTile {
         }
     }
 
-    public class Storage {
+    private class Storage {
         private static final String TAG = "CameraStorage";
-
         private String mRoot = Environment.getExternalStorageDirectory().toString();
-
         private Storage() {}
 
         public String writeFile(String title, byte[] data) {
@@ -425,6 +423,30 @@ public class CameraTile extends QuickSettingsTile {
         // Add the image to media store.
         public Uri addImage(ContentResolver resolver, String title, long date,
             int orientation, int jpegLength, String path, int width, int height) {
+
+            try {
+                ExifInterface exif = new ExifInterface(path);
+                switch (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1)) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        orientation = 90;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        orientation = 180;
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        orientation = 270;
+                        break;
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to read exif", e);
+            }
+
+            if ((mJpegRotation + orientation) % 180 != 0) {
+                int temp = width;
+                width = height;
+                height = width;
+            }
+
             // Insert into MediaStore.
             ContentValues values = new ContentValues(9);
             values.put(ImageColumns.TITLE, title);
