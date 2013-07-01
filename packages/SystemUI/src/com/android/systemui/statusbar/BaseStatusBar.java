@@ -32,7 +32,6 @@ import com.android.systemui.statusbar.policy.NotificationRowLayout;
 import com.android.systemui.statusbar.policy.PieController;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
@@ -1431,7 +1430,5 @@ public abstract class BaseStatusBar extends SystemUI implements
         if (mPieController != null) {
             mPieController.updatePieTriggerMask(newMask);
         }
-
-        Activity.mPieOnTop = isPieEnabled() && ((Position.TOP.FLAG & mPieTriggerSlots & mPieTriggerMask) != 0);
     }
 }
