@@ -722,9 +722,7 @@ public class Activity extends ContextThemeWrapper
     private CharSequence mTitle;
     private int mTitleColor = 0;
 
-    private boolean mQuickPeekAction = false;
-    private boolean mNtQsShadeActive = false;
-    private float mQuickPeekInitialY;
+    public static boolean mPieOnTop = false;
 
     final FragmentManagerImpl mFragments = new FragmentManagerImpl();
     final FragmentContainer mContainer = new FragmentContainer() {
@@ -2417,38 +2415,19 @@ public class Activity extends ContextThemeWrapper
      * @return boolean Return true if this event was consumed.
      */
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        final int action = ev.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                if (Settings.System.getInt(getContentResolver(),
-                    Settings.System.STATUSBAR_PEEK, 0) == 1) {
-                    if (ev.getY() < getStatusBarHeight()) {
-                        mQuickPeekInitialY = ev.getY();
-                        mQuickPeekAction = true;
-                    } else if (mNtQsShadeActive) {
-                        Settings.System.putInt(getContentResolver(),
-                                Settings.System.TOGGLE_NOTIFICATION_AND_QS_SHADE, 0);
-                        mNtQsShadeActive = false;
-                    }
-                }
-                onUserInteraction();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!mQuickPeekAction) {
-                    break;
-                }
-                if (Math.abs(ev.getY() - mQuickPeekInitialY) > getStatusBarHeight()) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            if (!mPieOnTop && (Settings.System.getInt(getContentResolver(),
+                    Settings.System.STATUSBAR_PEEK, 0) == 1)) {
+                if (ev.getY() < getStatusBarHeight()) {
                     Settings.System.putInt(getContentResolver(),
                             Settings.System.TOGGLE_NOTIFICATION_AND_QS_SHADE, 1);
-                        mNtQsShadeActive = true;
-                        mQuickPeekAction = false;
+                } else {
+                    Settings.System.putInt(getContentResolver(),
+                            Settings.System.TOGGLE_NOTIFICATION_AND_QS_SHADE, 0);
                 }
-                break;
-            default:
-                mQuickPeekAction = false;
-                break;
+            }
+            onUserInteraction();
         }
-
         if (getWindow().superDispatchTouchEvent(ev)) {
             return true;
         }
