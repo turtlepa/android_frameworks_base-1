@@ -1318,6 +1318,7 @@ final class ApplicationPackageManager extends PackageManager {
         } catch (RemoteException e) {
             // Should never happen!
         }
+    }
 
     @Override
     public void setPrivacyGuardSetting(String packageName, boolean enabled) {
