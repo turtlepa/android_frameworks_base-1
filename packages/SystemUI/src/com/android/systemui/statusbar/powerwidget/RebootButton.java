@@ -22,11 +22,8 @@ import com.android.systemui.R;
 import android.content.Context;
 import android.os.PowerManager;
 
-import com.android.systemui.statusbar.phone.PanelBarCollapseListener;
 
-public class RebootButton extends PowerButton implements PanelBarCollapseListener{
-
-    public static String TAG = "RebootButton";
+public class RebootButton extends PowerButton {
 
     private boolean rebootToRecovery = false;
 
@@ -49,21 +46,8 @@ public class RebootButton extends PowerButton implements PanelBarCollapseListene
 
     @Override
     protected boolean handleLongClick(Context context) {
-        mBar.registerListener(TAG, this);
-        mBar.collapseAllPanels(true);
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        pm.reboot(rebootToRecovery ? "recovery" : "");
         return true;
-    }
-
-    public void onAllPanelsCollapsed() {
-        mBar.unRegisterListener(TAG);
-        try{
-            // give the animation a second to finish
-            Thread.sleep(1000);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-        pm.reboot(rebootToRecovery? "recovery" : "");
     }
 }

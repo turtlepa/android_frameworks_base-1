@@ -21,14 +21,11 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Slog;
-import java.util.Hashtable;
-import java.util.Enumeration;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
 public class PanelBar extends FrameLayout {
-    public Hashtable<String, PanelBarCollapseListener> panelCollapseListeners = new Hashtable<String, PanelBarCollapseListener>();
     public static final boolean DEBUG = false;
     public static final String TAG = PanelBar.class.getSimpleName();
     public static final void LOG(String fmt, Object... args) {
@@ -207,12 +204,6 @@ public class PanelBar extends FrameLayout {
 
     public void onAllPanelsCollapsed() {
         if (DEBUG) LOG("onAllPanelsCollapsed");
-        Enumeration<PanelBarCollapseListener> listeners = panelCollapseListeners.elements();
-        if (listeners != null) {
-            while (listeners.hasMoreElements()) {
-                ((PanelBarCollapseListener) listeners.nextElement()).onAllPanelsCollapsed();
-            }
-        }
     }
 
     public void onPanelFullyOpened(PanelView openPanel) {
@@ -230,13 +221,5 @@ public class PanelBar extends FrameLayout {
     public void onTrackingStopped(PanelView panel) {
         mTracking = false;
         panelExpansionChanged(panel, panel.getExpandedFraction());
-    }
-
-    public void registerListener(String tag, PanelBarCollapseListener listener) {
-        panelCollapseListeners.put(tag, listener);
-    }
-
-    public void unRegisterListener(String tag) {
-        panelCollapseListeners.remove(tag);
     }
 }

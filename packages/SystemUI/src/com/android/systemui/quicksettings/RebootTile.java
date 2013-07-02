@@ -25,10 +25,8 @@ import android.view.View;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.QuickSettingsController;
 import com.android.systemui.statusbar.phone.QuickSettingsContainerView;
-import com.android.systemui.statusbar.phone.PanelBarCollapseListener;
 
-public class RebootTile extends QuickSettingsTile implements PanelBarCollapseListener{
-    public static String TAG = "RebootTile";
+public class RebootTile extends QuickSettingsTile {
     public static RebootTile mInstance;
     private boolean rebootToRecovery = false;
 
@@ -55,8 +53,8 @@ public class RebootTile extends QuickSettingsTile implements PanelBarCollapseLis
         mOnLongClick = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                mQsc.mBar.registerListener(TAG, mInstance);
-                mQsc.mBar.collapseAllPanels(true);
+                PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+                pm.reboot(rebootToRecovery? "recovery" : "");
                 return true;
             }
         };
@@ -72,16 +70,4 @@ public class RebootTile extends QuickSettingsTile implements PanelBarCollapseLis
         }
     }
 
-    public void onAllPanelsCollapsed() {
-        mQsc.mBar.unRegisterListener(TAG);
-        try{
-            // give the animation a second to finish
-            Thread.sleep(1000);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-        pm.reboot(rebootToRecovery? "recovery" : "");
-    }
 }
