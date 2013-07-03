@@ -176,7 +176,6 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
     private String KEY_HALO_POSITION_Y = "halo_position_y";
     private String KEY_HALO_POSITION_X = "halo_position_x";
 
-
     private final class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
