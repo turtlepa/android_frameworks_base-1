@@ -6352,7 +6352,6 @@ public final class ActivityManagerService extends ActivityManagerNative
                     // it runs in the process of the default user.  Get rid of it.
                     providers.remove(i);
                     N--;
-                    i--;
                     continue;
                 }
 
