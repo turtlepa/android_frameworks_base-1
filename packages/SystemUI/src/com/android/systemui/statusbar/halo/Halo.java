@@ -266,6 +266,9 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         mPaintHoloRed.setAntiAlias(true);
         mPaintHoloRed.setColor(0xffcc0000);
 
+        mGone = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.HALO_GONE, 0, UserHandle.USER_CURRENT) == 1;
+
         // Create effect layer
         mEffect = new HaloEffect(mContext);
         mEffect.setLayerType (View.LAYER_TYPE_HARDWARE, null);
@@ -301,6 +304,10 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
         
         mKillX = mScreenWidth / 2;
         mKillY = mIconHalfSize;
+
+        if (mGone) {
+            mEffect.setVisibility(mNotificationData.size() > 0 ? View.VISIBLE : View.GONE);
+        }
 
         if (!mFirstStart) {
             if (msavePositionY < 0) mEffect.setHaloY(0);
