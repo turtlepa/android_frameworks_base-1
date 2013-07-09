@@ -8078,7 +8078,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             // in onHoverEvent.
             // Note that onGenericMotionEvent will be called by default when
             // onHoverEvent returns false (refer to dispatchGenericMotionEvent).
-            return dispatchGenericMotionEventInternal(event);
+            dispatchGenericMotionEventInternal(event);
+            return true;
         }
 
         return false;
