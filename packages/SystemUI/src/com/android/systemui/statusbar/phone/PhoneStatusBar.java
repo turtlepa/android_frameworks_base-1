@@ -1966,10 +1966,7 @@ public class PhoneStatusBar extends BaseStatusBar {
     }
 
     public boolean isShowingSettings() {
-        if (mFlipSettingsView != null) {
-            return mHasFlipSettings && mFlipSettingsView.getVisibility() == View.VISIBLE;
-        }
-        return false;
+        return mHasFlipSettings && mFlipSettingsView.getVisibility() == View.VISIBLE;
     }
 
     public void completePartialFlip() {
