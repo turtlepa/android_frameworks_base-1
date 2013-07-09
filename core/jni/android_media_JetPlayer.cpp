@@ -130,10 +130,9 @@ android_media_JetPlayer_loadFromFile(JNIEnv *env, jobject thiz, jstring path)
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for openFile()");
-        return JNI_FALSE;
     }
 
     // set up event callback function
@@ -167,10 +166,9 @@ android_media_JetPlayer_loadFromFileD(JNIEnv *env, jobject thiz,
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for openFile()");
-        return JNI_FALSE;
     }
 
     // set up event callback function
@@ -197,10 +195,9 @@ android_media_JetPlayer_closeFile(JNIEnv *env, jobject thiz)
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for closeFile()");
-        return JNI_FALSE;
     }
 
     if (lpJet->closeFile()==EAS_SUCCESS) {
@@ -219,10 +216,9 @@ android_media_JetPlayer_play(JNIEnv *env, jobject thiz)
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for play()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result = lpJet->play();
@@ -243,10 +239,9 @@ android_media_JetPlayer_pause(JNIEnv *env, jobject thiz)
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for pause()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result = lpJet->pause();
@@ -273,10 +268,9 @@ android_media_JetPlayer_queueSegment(JNIEnv *env, jobject thiz,
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for queueSegment()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result
@@ -300,10 +294,9 @@ android_media_JetPlayer_queueSegmentMuteArray(JNIEnv *env, jobject thiz,
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for queueSegmentMuteArray()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result=EAS_FAILURE;
@@ -346,10 +339,9 @@ android_media_JetPlayer_setMuteFlags(JNIEnv *env, jobject thiz,
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for setMuteFlags()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result;
@@ -371,10 +363,9 @@ android_media_JetPlayer_setMuteArray(JNIEnv *env, jobject thiz,
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for setMuteArray()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result=EAS_FAILURE;
@@ -417,10 +408,9 @@ android_media_JetPlayer_setMuteFlag(JNIEnv *env, jobject thiz,
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for setMuteFlag()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result;
@@ -443,10 +433,9 @@ android_media_JetPlayer_triggerClip(JNIEnv *env, jobject thiz, jint clipId)
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for triggerClip()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result;
@@ -468,10 +457,9 @@ android_media_JetPlayer_clearQueue(JNIEnv *env, jobject thiz)
 {
     JetPlayer *lpJet = (JetPlayer *)env->GetIntField(
         thiz, javaJetPlayerFields.nativePlayerInJavaObj);
-    if (lpJet == NULL) {
+    if (lpJet == NULL ) {
         jniThrowException(env, "java/lang/IllegalStateException",
             "Unable to retrieve JetPlayer pointer for clearQueue()");
-        return JNI_FALSE;
     }
 
     EAS_RESULT result = lpJet->clearQueue();
