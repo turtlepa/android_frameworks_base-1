@@ -162,6 +162,7 @@ public class Halo extends FrameLayout implements Ticker.TickerCallback {
     private boolean mOverX = false;
     private boolean mInteractionReversed = true;
     private boolean hiddenState = false;
+    private boolean mGone;
 
     private int mIconSize, mIconHalfSize;
     private int mScreenWidth, mScreenHeight;
