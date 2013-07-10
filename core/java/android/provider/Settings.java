@@ -3978,6 +3978,11 @@ public final class Settings {
         public static final String WE_WANT_POPUPS = "we_want_popups";
 
         /**
+         * @hide
+         */
+        public static final String HALO_GONE = "halo_gone";
+
+        /**
          * Is current activity launcher or not
          * @hide
          */
