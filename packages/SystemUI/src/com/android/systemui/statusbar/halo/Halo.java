@@ -56,6 +56,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Matrix;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.os.Vibrator;
 import android.os.ServiceManager;
 import android.provider.Settings;
