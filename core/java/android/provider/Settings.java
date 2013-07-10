@@ -3972,6 +3972,21 @@ public final class Settings {
         public static final String HALO_PAUSE = "halo_pause";
 
         /**
+         * @hide
+         */
+        public static final String HALO_BUTTON_COLOR = "halo_button_color";
+
+        /**
+         * @hide
+         */
+        public static final String HALO_TEXT_BUBBLE_COLOR = "halo_text_bubble_color";
+
+        /**
+         * @hide
+         */
+        public static final String HALO_PING_COLOR = "halo_ping_color";
+
+        /**
          * Do you want popups/floating windows?
          * @hide
          */
