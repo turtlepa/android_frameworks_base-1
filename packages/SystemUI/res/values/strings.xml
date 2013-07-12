@@ -526,9 +526,4 @@
     <string name="service_free_mem"><xliff:g id="memory">%1$s</xliff:g> free</string>
     <!-- [CHAR LIMIT=10] Running services, summary of foreground processes -->
     <string name="service_used_mem"><xliff:g id="memory">%1$s</xliff:g> used</string>
-
-    <string name="halo_dismiss">Dismiss notification</string>
-    <string name="halo_hide">Hide HALO</string>
-    <string name="halo_clear_all">Clear all notifications</string>
-    <string name="halo_silence">Hide and Silence HALO until woken</string>
 </resources>
