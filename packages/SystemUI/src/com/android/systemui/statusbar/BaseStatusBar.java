@@ -94,7 +94,6 @@ import android.widget.TextView;
 
 import com.android.systemui.statusbar.halo.Halo;
 import com.android.systemui.statusbar.phone.Ticker;  
-import com.android.systemui.statusbar.tablet.TabletTicker;
 
 import java.util.ArrayList;
 
@@ -127,7 +126,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     // Halo
     protected Halo mHalo = null;
-    protected TabletTicker mTabletTicker;
     protected Ticker mTicker;
     protected boolean mHaloEnabled;
     protected boolean mHaloActive;
@@ -198,11 +196,7 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     public Ticker getTicker() {
         return mTicker;
-    }
-
-    public TabletTicker getTabletTicker() {
-        return mTabletTicker;
-    }
+    } 
 
     private boolean mShowNotificationCounts;
 
