@@ -2559,7 +2559,7 @@ public final class Settings {
          * (1<<3) = TOP
          * Default: BOTTOM
          * @hide
-         */ pause activities?, defaults to 0 (no, d
+         */
         public static final String PIE_POSITIONS = "pie_positions";
 
         /**
