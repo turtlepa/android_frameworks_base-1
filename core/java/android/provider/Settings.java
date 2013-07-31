@@ -3205,6 +3205,11 @@ public final class Settings {
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
 
         /**
+         * Force dual panel for settings
+         */
+        public static final String FORCE_DUAL_PANEL = "force_dualpanel"; 
+
+        /**
          * ListView Animations
          * 0 == None
          * 1 == Wave (Left)
