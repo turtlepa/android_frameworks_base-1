@@ -1027,6 +1027,42 @@ public final class Settings {
             outKeySet.addAll(MOVED_TO_GLOBAL);
         }
 
+	/**
+         * Look up a boolean in the database.
+         * @param resolver to access the database with
+         * @param name to look up in the table
+         * @param def Value to return if the setting is not defined.
+         * @return The setting's current value, or 'def' if it is not defined
+         * or not a valid boolean.
+         */
+        public static boolean getBoolean(ContentResolver cr, String name, boolean def) {
+            String v = getString(cr, name);
+            try {
+                if(v != null)
+                    return "1".equals(v);
+                else
+                    return def;
+            } catch (NumberFormatException e) {
+                return def;
+            }
+        }
+        /**
+         * Convenience function for updating a single settings value as a
+         * boolean. This will either create a new entry in the table if the
+         * given name does not exist, or modify the value of the existing row
+         * with that name.  Note that internally setting values are always
+         * stored as strings, so this function converts the given value to a
+         * string before storing it.
+         *
+         * @param cr The ContentResolver to access.
+         * @param name The name of the setting to modify.
+         * @param value The new value for the setting.
+         * @return true if the value was set, false on database errors
+         */
+        public static boolean putBoolean(ContentResolver cr, String name, boolean value) {
+            return putString(cr, name, value ? "1" : "0");
+        } 
+
         /**
          * Look up a name in the database.
          * @param resolver to access the database with
@@ -2034,6 +2070,34 @@ public final class Settings {
          */
         public static final String VIBRATE_IN_SILENT = "vibrate_in_silent";
 
+	/**
+         * wake up when plugged or unplugged
+         *
+         * @hide
+         */
+        public static final String WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged"; 
+
+	/**
+         * Whether Status bar should be hiidden when there are no
+         * notifications
+         * @hide
+         */
+        public static final String AUTO_HIDE_STATUSBAR = "auto_hide_statusbar";
+        
+        /**
+         * Whether Status Bar is currently hidden or not
+         * @hide
+         */
+        public static final String HIDE_STATUSBAR = "hide_statusbar";  
+
+	/**
+         * Peek at stausbar when it is hidden by swiping down from top
+         * end of the screen
+         *
+         * @hide
+         */
+        public static final String STATUSBAR_PEEK = "statusbar_peek";   
+
         /**
          * The mapping of stream type (integer) to its setting.
          */
@@ -2657,6 +2721,14 @@ public final class Settings {
          */
         public static final String PIE_SENSITIVITY = "pie_sensitivity";
 
+	/**
+         * Pie color settings.
+         * Default: blank
+         * See class PieColorUtils for more information on this.
+         * @hide
+         */
+        public static final String PIE_COLORS = "pie_colors"; 
+
         /**
          * Quick Settings Panel Tiles to Use
          *
@@ -2770,6 +2842,55 @@ public final class Settings {
          */
         public static final String NAV_BUTTONS = "nav_buttons";
 
+	/**
+         * Option to show or not navigation bar
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_SHOW = "navigation_bar_show";  
+
+	/**
+         * Height of navigation bar
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height"; 
+
+	/**
+         * Width of navigation bar
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_WIDTH = "navigation_bar_width";  
+
+	/**
+   	 * Landscape height of navigation bar
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT_LANDSCAPE = "navigation_bar_height_landscape";
+
+	/**
+         * Is current activity launcher or not
+         * @hide
+         */
+        public static final String IS_HOME = "is_home";
+
+  	/**
+         * Navigation bar color
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_COLOR = "navigation_bar_color";
+ 
+         /**
+         * Navigation bar alpha
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_ALPHA = "navigation_bar_alpha";
+
+        /**
+         * Sets transparency mode of navigation bar
+         * 0 = only home, 1 = keyguard and home (default), 2 = always
+         * @hide
+         */
+        public static final String NAV_BAR_ALPHA_MODE = "nav_bar_alpha_mode"; 
+
         /**
         * Notification Power Widget - Custom Brightness Mode
         * @hide
@@ -2828,6 +2949,93 @@ public final class Settings {
          */
         public static final String STATUS_BAR_BATTERY = "status_bar_battery";
 
+	/**
+         * Sets transparency of statusbar
+         * @hide
+         */
+        public static final String STATUS_BAR_ALPHA = "status_bar_alpha";
+
+        /**
+         * Sets transparency mode of statusbar
+         * 0 = only home, 1 = keyguard and home (default), 2 = always
+         * @hide
+         */
+        public static final String STATUS_BAR_ALPHA_MODE = "status_bar_alpha_mode";
+
+        /**
+         * Sets color of statusbar
+         * @hide
+         */
+        public static final String STATUS_BAR_COLOR = "status_bar_color"; 
+
+	/**
+         * Sets the portrait background of notification drawer
+         * @hide
+         */
+        public static final String NOTIFICATION_BACKGROUND = "notification_background";
+
+        /**
+         * Sets the landscape background of notification drawer
+         * @hide
+         */
+        public static final String NOTIFICATION_BACKGROUND_LANDSCAPE = "notification_background_landscape";
+
+        /**
+         * Sets the alpha (transparency) of notification wallpaper
+         * @hide
+         */
+        public static final String NOTIF_WALLPAPER_ALPHA = "notif_wallpaper_alpha"; 
+
+  	/**
+         * Sets the alpha (transparency) of notifications
+         * @hide
+         */
+        public static final String NOTIF_ALPHA = "notif_alpha";  
+
+	/**
+         * Circle battery icon color
+         * in statusbar
+         */
+        public static final String STATUS_BAR_CIRCLE_BATTERY_COLOR = "status_bar_circle_battery_color";
+
+        /**
+         * Circle battery icon text color
+         * in statusbar
+         */
+        public static final String STATUS_BAR_CIRCLE_BATTERY_TEXT_COLOR = "status_bar_circle_battery_text_color";
+
+        /**
+         * Circle battery animation speed during charge
+         * in statusbar
+         */
+        public static final String STATUS_BAR_CIRCLE_BATTERY_ANIMATIONSPEED = "status_bar_circle_battery_animationspeed";
+
+        /**
+         * Whether to show the battery bar
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_THICKNESS = "statusbar_battery_bar_thickness";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_STYLE = "statusbar_battery_bar_style";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate"; 
+
         /**
          * Whether to show the clock in status bar
          * of the stock battery icon
@@ -2837,6 +3045,54 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CLOCK = "status_bar_clock";
+
+       /**
+	* AM/PM Style for clock options
+	* 0 - Normal AM/PM
+	* 1 - Small AM/PM
+	* 2 - No AM/PM
+	* @hide	
+	*/
+        public static final String STATUSBAR_CLOCK_AM_PM_STYLE = "statusbar_clock_am_pm_style";
+
+       /**
+	* Style of clock
+	* 0 - Hide Clock
+	* 1 - Right Clock
+	* 2 - Center Clock
+	* @hide
+	*/
+        public static final String STATUSBAR_CLOCK_STYLE = "statusbar_clock_style";
+
+       /**
+	* Setting for clock color
+	* @hide
+	*/
+        public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
+
+       /**
+	* @hide
+	* Shows custom date before clock time
+	* 0 - No Date
+	* 1 - Small Date
+	* 2 - Normal Date
+	*/
+        public static final String STATUSBAR_CLOCK_DATE_DISPLAY = "statusbar_clock_date_display";
+
+       /**
+	* @hide
+	* Sets the date string style
+	* 0 - Regular style
+	* 1 - Lowercase
+	* 2 - Uppercase
+	*/
+        public static final String STATUSBAR_CLOCK_DATE_STYLE = "statusbar_clock_date_style";
+
+       /**
+	* @hide
+	* Stores the java DateFormat string for the date
+	*/
+        public static final String STATUSBAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
 
         /**
          * Whether to show the signal text or signal bars.
@@ -3271,6 +3527,18 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_KEYS_CONTROL_RING_STREAM = "volume_keys_control_ring_stream";
+
+	/**
+         * Force dual panel for settings
+         */
+        public static final String FORCE_DUAL_PANEL = "force_dualpanel"; 
+
+	/**
+         * Holds the text for the Carrier label. An empty string
+         * will bring the default text back.
+         * @hide
+         */
+        public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label"; 
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -3756,7 +4024,7 @@ public final class Settings {
             outKeySet.addAll(MOVED_TO_GLOBAL);
         }
 
-        /**
+	/**
          * Look up a name in the database.
          * @param resolver to access the database with
          * @param name to look up in the table
