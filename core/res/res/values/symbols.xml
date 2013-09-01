@@ -1766,4 +1766,8 @@
   <java-symbol type="string" name="trash" />
 
   <java-symbol type="drawable" name="cm_default_wallpaper" />
+
+  <!-- Package Manager -->
+  <java-symbol type="array" name="config_disabledComponents" />
+
 </resources>
