@@ -2511,6 +2511,13 @@ public final class Settings {
         public static final String EGG_MODE = "egg_mode";
 
         /**
+         * Config for advanced power menu
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_CONFIG = "power_menu_config";
+
+        /**
          * Sets the portrait background of notification drawer
          * @hide
          */
