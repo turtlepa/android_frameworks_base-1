@@ -2427,6 +2427,11 @@ public final class Settings {
          */
         public static final String ACTIVE_DISPLAY_BRIGHTNESS = "active_display_brightness";
 
+        /** Sprint MWI Quirk: Show message wait indicator notifications
+         * @hide
+         */
+        public static final String ENABLE_MWI_NOTIFICATION = "enable_mwi_notification";
+
         /**
          * Display active display view when device comes out of the user's pocket, etc...
          * @hide
