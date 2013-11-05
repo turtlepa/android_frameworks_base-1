@@ -1289,4 +1289,8 @@
         <item>333</item>
         <item>353</item>
     </string-array>
+
+    <!-- kill app long press back -->
+    <integer name="config_backKillTimeout">2000</integer>
+
 </resources>
