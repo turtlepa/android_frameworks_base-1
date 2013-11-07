@@ -88,7 +88,7 @@ public class DateView extends TextView {
 
     protected void updateClock() {
         if (mDateFormat == null) {
-            final String dateFormat = getContext().getString(R.string.system_ui_date_pattern);
+        final String dateFormat = getContext().getString(R.string.full_wday_month_day_no_year_split);
             final Locale l = Locale.getDefault();
             final String fmt = ICU.getBestDateTimePattern(dateFormat, l.toString());
             mDateFormat = new SimpleDateFormat(fmt, l);
