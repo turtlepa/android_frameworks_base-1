@@ -3276,6 +3276,13 @@ public final class Settings {
         public static final String NOTIFICATION_CUSTOM_CARRIER_LABEL = "notification_custom_carrier_label";
 
         /**
+         * Network activity arrows
+         *
+         * @hide
+         */
+        public static final String NETWORK_ACTIVITY_ARROWS = "network_activity_arrows";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
