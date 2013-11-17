@@ -6,5 +6,4 @@
     <string name="time_of_day">%-l:%M:%S %p</string>
     <string name="date_and_time">%b %-e, %Y, %-l:%M:%S %p</string>
     <string name="date_time">%1$s, %2$s</string>
-    <string name="full_wday_month_day_no_year_split">EEEE\nMMMM d</string>
 </resources>
