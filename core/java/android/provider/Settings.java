@@ -2615,12 +2615,6 @@ public final class Settings {
         public static final String STATUS_BAR_NETWORK_COLOR = "status_bar_network_usage_color";   
 
         /**
-         * Whether to prevent loud volume levels when headset is first plugged in.
-         * @hide
-         */
-        public static final String SAFE_HEADSET_VOLUME = "safe_headset_volume";
-
-        /**
          * Electronic beam animation mode
          * 0 = off,
          * 1 = always horizontal,
