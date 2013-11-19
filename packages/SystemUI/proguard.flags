@@ -7,4 +7,7 @@
   public void setGlowScale(float);
 }
 
--keep class com.android.systemui.statusbar.tv.TvStatusBar
+-keep class com.android.systemui.statusbar.tv.TvStatusBar {
+}
+
+-keep class com.android.systemui.djl.screenrecord
