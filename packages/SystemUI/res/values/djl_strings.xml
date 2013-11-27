@@ -94,4 +94,8 @@
     <!-- QuickSettings: Wifi display [CHAR LIMIT=NONE] -->
     <string name="quick_settings_wifi_display_no_connection_label">Wireless Display</string>
 
+    <!-- Development shortcut -->
+    <string name="advanced_dev_option_wipe_app">Wipe app data</string>
+    <string name="advanced_dev_option_force_stop">Force stop</string>
+
 </resources>
