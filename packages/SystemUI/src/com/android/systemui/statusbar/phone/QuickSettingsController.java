@@ -58,7 +58,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 
-import com.android.internal.util.slim.DeviceUtils;
+import com.android.internal.util.djl.DeviceUtils;
 import com.android.systemui.quicksettings.AirplaneModeTile;
 import com.android.systemui.quicksettings.AlarmTile;
 import com.android.systemui.quicksettings.AutoRotateTile;
