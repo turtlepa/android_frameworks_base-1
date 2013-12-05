@@ -2681,30 +2681,6 @@ public final class Settings {
         public static final String EXPANDED_DESKTOP_STATE = "expanded_desktop_state";
 
         /**
-         * Sets the portrait background of notification drawer
-         * @hide
-         */
-        public static final String NOTIFICATION_BACKGROUND = "notification_background";
-
-        /**
-         * Sets the landscape background of notification drawer
-         * @hide
-         */
-        public static final String NOTIFICATION_BACKGROUND_LANDSCAPE = "notification_background_landscape";
-
-        /**
-         * Sets the alpha (transparency) of notification wallpaper
-         * @hide
-         */
-        public static final String NOTIF_WALLPAPER_ALPHA = "notif_wallpaper_alpha"; 
-
-        /**
-         * Sets the alpha (transparency) of notifications
-         * @hide
-         */
-        public static final String NOTIF_ALPHA = "notif_alpha";   
-
-        /**
          * Show or hide clock
          * 0 - hide
          * 1 - show (default)
