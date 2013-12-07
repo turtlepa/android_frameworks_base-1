@@ -26,7 +26,6 @@ import static com.android.internal.util.djl.QSConstants.TILE_DELIMITER;
 import static com.android.internal.util.djl.QSConstants.TILE_EXPANDEDDESKTOP;
 import static com.android.internal.util.djl.QSConstants.TILE_LOCATION;
 import static com.android.internal.util.djl.QSConstants.TILE_LOCKSCREEN;
-import static com.android.internal.util.djl.QSConstants.TILE_LTE;
 import static com.android.internal.util.djl.QSConstants.TILE_MOBILEDATA;
 import static com.android.internal.util.djl.QSConstants.TILE_MUSIC;
 import static com.android.internal.util.djl.QSConstants.TILE_NETWORKMODE;
@@ -69,7 +68,6 @@ import com.android.systemui.quicksettings.BugReportTile;
 import com.android.systemui.quicksettings.ExpandedDesktopTile;
 import com.android.systemui.quicksettings.LocationTile;
 import com.android.systemui.quicksettings.InputMethodTile;
-import com.android.systemui.quicksettings.LteTile;
 import com.android.systemui.quicksettings.MobileNetworkTile;
 import com.android.systemui.quicksettings.MobileNetworkTypeTile;
 import com.android.systemui.quicksettings.MusicTile;
@@ -149,7 +147,6 @@ public class QuickSettingsController {
         // Filter items not compatible with device
         boolean bluetoothSupported = DeviceUtils.deviceSupportsBluetooth();
         boolean mobileDataSupported = DeviceUtils.deviceSupportsMobileData(mContext);
-        boolean lteSupported = DeviceUtils.deviceSupportsLte(mContext);
 
         if (!bluetoothSupported) {
             TILES_DEFAULT.remove(TILE_BLUETOOTH);
@@ -159,10 +156,6 @@ public class QuickSettingsController {
             TILES_DEFAULT.remove(TILE_WIFIAP);
             TILES_DEFAULT.remove(TILE_MOBILEDATA);
             TILES_DEFAULT.remove(TILE_NETWORKMODE);
-        }
-
-        if (!lteSupported) {
-            TILES_DEFAULT.remove(TILE_LTE);
         }
 
         // Read the stored list of tiles
@@ -218,8 +211,6 @@ public class QuickSettingsController {
                 qs = new SleepScreenTile(mContext, this);
             } else if (tile.equals(TILE_NFC)) {
                 qs = new NfcTile(mContext, this);
-            } else if (tile.equals(TILE_LTE)) {
-                qs = new LteTile(mContext, this);
             } else if (tile.equals(TILE_VOLUME)) {
                 qs = new VolumeTile(mContext, this, mHandler);
             } else if (tile.equals(TILE_EXPANDEDDESKTOP)) {

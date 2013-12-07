@@ -36,7 +36,6 @@ public class QSConstants {
         public static final String TILE_AUTOROTATE = "toggleAutoRotate";
         public static final String TILE_AIRPLANE = "toggleAirplane";
         public static final String TILE_SLEEP = "toggleSleepMode";
-        public static final String TILE_LTE = "toggleLte";
         public static final String TILE_NFC = "toggleNfc";
         public static final String TILE_USBTETHER = "toggleUsbTether";
         public static final String TILE_VOLUME = "toggleVolume";

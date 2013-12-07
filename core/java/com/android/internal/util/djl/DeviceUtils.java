@@ -70,13 +70,6 @@ public class DeviceUtils {
         return NfcAdapter.getDefaultAdapter(context) != null;
     }
 
-    public static boolean deviceSupportsLte(Context context) {
-        final TelephonyManager tm =
-            (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return (tm.getLteOnCdmaMode() == PhoneConstants.LTE_ON_CDMA_TRUE)
-                    || tm.getLteOnGsmMode() != 0;
-    }
-
     public static boolean deviceSupportsGps(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS);
     }
