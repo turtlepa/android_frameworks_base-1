@@ -27,6 +27,7 @@
     android:layout_marginTop="-25dp"
     android:layout_marginBottom="-75dp"
     systemui:recentItemLayout="@layout/status_bar_recent_item"
+    android:fitsSystemWindows="true"
     >
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,6 +136,7 @@
                                     android:clickable="true"
                                     android:layout_width="43dp"
                                     android:layout_height="43dp"
+                                    android:paddingTop="20dp"
                                     android:scaleType="center"
                                     android:layout_gravity="top|right"
                                     android:src="@drawable/ic_recents_clear" />
@@ -142,6 +144,7 @@
                                     android:clickable="true"
                                     android:layout_width="43dp"
                                     android:layout_height="43dp"
+                                    android:paddingTop="20dp"
                                     android:scaleType="center"
                                     android:layout_gravity="top|left"
                                     android:src="@drawable/ic_recents_clear" />
