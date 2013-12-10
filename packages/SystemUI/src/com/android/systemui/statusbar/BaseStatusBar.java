@@ -1077,7 +1077,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
         // Construct the expanded view.
-        NotificationData.Entry entry = new NotificationData.Entry(key, notification, iconView);
         if (!inflateViews(entry, mPile)) {
             handleNotificationError(key, notification, "Couldn't expand RemoteViews for: "
                     + notification);
