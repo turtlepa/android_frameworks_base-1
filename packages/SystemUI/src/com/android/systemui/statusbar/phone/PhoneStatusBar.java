@@ -2061,11 +2061,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
     final int FLIP_DURATION = (FLIP_DURATION_IN + FLIP_DURATION_OUT);
 
     Animator mScrollViewAnim, mFlipSettingsViewAnim, mNotificationButtonAnim,
-<<<<<<< HEAD
-        mSettingsButtonAnim, mClearButtonAnim;
-=======
-        mSettingsButtonAnim, mHaloButtonAnim, mClearButtonAnim, mEditModeButtonAnim;
->>>>>>> 8f15a5f... [2/2] Frameworks: HALO
+        mSettingsButtonAnim, mHaloButtonAnim, mClearButtonAnim;
 
     @Override
     public void animateExpandNotificationsPanel() {
@@ -2117,19 +2113,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
         mSettingsButtonAnim = start(
             ObjectAnimator.ofFloat(mSettingsButton, View.ALPHA, 1f)
                 .setDuration(FLIP_DURATION));
-<<<<<<< HEAD
-=======
         mHaloButtonVisible = true;
         updateHaloButton();
         mHaloButtonAnim = start(
             ObjectAnimator.ofFloat(mHaloButton, View.ALPHA, 1f)
                 .setDuration(FLIP_DURATION));
-        mEditModeButtonAnim = start(
-            setVisibilityWhenDone(
-                ObjectAnimator.ofFloat(mEditModeButton, View.ALPHA, 0f)
-                    .setDuration(FLIP_DURATION),
-                mEditModeButton, View.INVISIBLE));
->>>>>>> 8f15a5f... [2/2] Frameworks: HALO
         mClearButton.setVisibility(View.VISIBLE);
         mClearButton.setAlpha(0f);
         setAreThereNotifications(); // this will show/hide the button as necessary
@@ -2821,54 +2809,28 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
 
         @Override
         public void tickerStarting() {
-<<<<<<< HEAD
-            mTicking = true;
-            mStatusBarContents.setVisibility(View.GONE);
-            mCenterClockLayout.setVisibility(View.GONE);
-            mTickerView.setVisibility(View.VISIBLE);
-            mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
-            mCenterClockLayout.startAnimation(
-                loadAnim(com.android.internal.R.anim.push_up_out,
-                null));
-=======
             if (!mHaloActive) {
                 mStatusBarContents.setVisibility(View.GONE);
                 mTickerView.setVisibility(View.VISIBLE);
                 mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_up_in, null));
                 mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_up_out, null));
+            mCenterClockLayout.startAnimation(
+                loadAnim(com.android.internal.R.anim.push_up_out,
+                null));
             }
->>>>>>> 8f15a5f... [2/2] Frameworks: HALO
         }
 
         @Override
         public void tickerDone() {
-<<<<<<< HEAD
-            mStatusBarContents.setVisibility(View.VISIBLE);
-            mCenterClockLayout.setVisibility(View.VISIBLE);
-            mTickerView.setVisibility(View.GONE);
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in, null));
-            mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_down_out,
-                        mTickingDoneListener));
-            mCenterClockLayout.startAnimation(
-                loadAnim(com.android.internal.R.anim.push_down_in,
-                null));
-        }
-
-        public void tickerHalting() {
-            mStatusBarContents.setVisibility(View.VISIBLE);
-            mCenterClockLayout.setVisibility(View.VISIBLE);
-            mTickerView.setVisibility(View.GONE);
-            mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-            mCenterClockLayout.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
-            // we do not animate the ticker away at this point, just get rid of it (b/6992707)
-=======
             if (!mHaloActive) {
                 mStatusBarContents.setVisibility(View.VISIBLE);
                 mTickerView.setVisibility(View.GONE);
                 mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.push_down_in, null));
                 mTickerView.startAnimation(loadAnim(com.android.internal.R.anim.push_down_out,
                             mTickingDoneListener));
+            mCenterClockLayout.startAnimation(
+                loadAnim(com.android.internal.R.anim.push_down_in,
+                null));
             }
         }
 
@@ -2879,7 +2841,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                 mStatusBarContents.startAnimation(loadAnim(com.android.internal.R.anim.fade_in, null));
                 // we do not animate the ticker away at this point, just get rid of it (b/6992707)
             }
->>>>>>> 8f15a5f... [2/2] Frameworks: HALO
         }
     }
 
@@ -3204,9 +3165,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
                     new Intent(AlarmClock.ACTION_SHOW_ALARMS), true); // have fun, everyone
         }
     };
-<<<<<<< HEAD
+
     private View.OnClickListener mCalendarClickListener = new View.OnClickListener() {
-=======
+        public void onClick(View v) {
+            Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR);
+            startActivityDismissingKeyguard(intent,true);
+        }
+    };
 
     private View.OnClickListener mHaloButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -3217,14 +3182,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode {
             mTickerView.setVisibility(View.GONE);
             // Collapse
             animateCollapsePanels();
-        }
-    };
-
-    private View.OnClickListener mClockClickListener = new View.OnClickListener() {
->>>>>>> 8f15a5f... [2/2] Frameworks: HALO
-        public void onClick(View v) {
-            Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR);
-            startActivityDismissingKeyguard(intent,true);
         }
     };
 
