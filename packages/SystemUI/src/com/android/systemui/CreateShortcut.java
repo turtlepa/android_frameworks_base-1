@@ -58,12 +58,8 @@ public class CreateShortcut extends LauncherActivity {
 
         if (c.equals ("Immersive")) {
             return R.drawable.ic_qs_expanded_desktop_on;
-        } else if (c.equals ("QuietHours")) {
-            return R.drawable.ic_qs_quiet_hours_on;
         } else if (c.equals("Rotation")) {
             return R.drawable.ic_qs_auto_rotate;
-        } else if (c.equals("Torch")) {
-            return R.drawable.ic_qs_torch_on;
         } else if (c.equals("LastApp")) {
             return R.drawable.ic_sysbar_lastapp;
         } else if (c.equals("Reboot")) {

@@ -266,18 +266,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android.systemui.shortcuts.QuietHours"
-            android:label="@string/shortcut_quiethours"
-            android:icon="@drawable/ic_qs_quiet_hours_on"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.android.systemui.shortcuts.Reboot"
             android:label="@string/shortcut_reboot"
             android:icon="@drawable/ic_qs_reboot"
@@ -305,18 +293,6 @@
             android:name="com.android.systemui.shortcuts.Screenshot"
             android:label="@string/shortcut_screenshot"
             android:icon="@drawable/ic_sysbar_screenshot"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.android.systemui.SHORTCUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.android.systemui.shortcuts.Torch"
-            android:label="@string/shortcut_torch"
-            android:icon="@drawable/ic_qs_torch_on"
             android:theme="@android:style/Theme.NoDisplay"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" >

@@ -22,8 +22,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 
-import com.android.internal.util.slim.PolicyConstants;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.djl.PolicyConstants;
+import com.android.internal.util.djl.SlimActions;
 
 public class Reboot extends Activity  {
 
