@@ -97,6 +97,8 @@
     <string name="quick_settings_music_pause">Pause</string>
     <string name="quick_settings_reboot_recovery">Recovery</string>
     <string name="quick_settings_reboot">Reboot</string>
+    <string name="quick_settings_theme_switch_dark">Dark theme</string>
+    <string name="quick_settings_theme_switch_light">Light theme</string>
 
     <!-- Development shortcut -->
     <string name="advanced_dev_option_wipe_app">Wipe app data</string>
