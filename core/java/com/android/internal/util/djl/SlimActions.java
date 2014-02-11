@@ -77,11 +77,14 @@ public class SlimActions {
             } catch (RemoteException e) {
             }
 
-            if (!action.equals(ButtonsConstants.ACTION_QS)
-                    && !action.equals(ButtonsConstants.ACTION_NOTIFICATIONS)) {
-                try {
-                    barService.collapsePanels();
-                } catch (RemoteException ex) {
+            if (collapseShade) {
+                if (!action.equals(ButtonsConstants.ACTION_QS)
+                        && !action.equals(ButtonsConstants.ACTION_NOTIFICATIONS)
+                        && !action.equals(ButtonsConstants.ACTION_THEME_SWITCH)) {
+                    try {
+                        barService.collapsePanels();
+                    } catch (RemoteException ex) {
+                    }
                 }
             }
 
@@ -126,13 +129,17 @@ public class SlimActions {
                         expandDesktopModeOn ? 0 : 1, UserHandle.USER_CURRENT);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_THEME_SWITCH)) {
-                boolean enabled = Settings.Secure.getIntForUser(
+                boolean autoLightMode = Settings.Secure.getIntForUser(
                         context.getContentResolver(),
                         Settings.Secure.UI_THEME_AUTO_MODE, 0,
-                        UserHandle.USER_CURRENT) != 1;
+                        UserHandle.USER_CURRENT) == 1;
                 boolean state = context.getResources().getConfiguration().uiThemeMode
                         == Configuration.UI_THEME_MODE_HOLO_DARK;
-                if (!enabled) {
+                if (autoLightMode) {
+                    try {
+                        barService.collapsePanels();
+                    } catch (RemoteException ex) {
+                    }
                     Toast.makeText(context,
                             com.android.internal.R.string.theme_auto_switch_mode_error,
                             Toast.LENGTH_SHORT).show();
