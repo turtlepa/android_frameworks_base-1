@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (c) 2013 SlimRoms Project
- * Copyright (c) 2006, The Android Open Source Project
+/*
+ * Copyright 2010, The Android Open Source Project
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,22 +14,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 -->
 <resources>
 
-    <!-- Network stats text size -->
-    <dimen name="network_stats_text_size">9dp</dimen>  
-
-    <!-- Notification Shortcuts -->
-    <dimen name="notification_shortcuts_close_handle_height">28dp</dimen>
-    <dimen name="notification_shortcuts_spacing_height">88dp</dimen>
-    <dimen name="notification_shortcuts_drawer_margin">56dp</dimen>
-
     <!-- Slim recent -->
-    <dimen name="recent_width">230dp</dimen>
-    <dimen name="recent_app_icon_size">48dp</dimen>
-    <dimen name="recent_thumbnail_width">198dp</dimen>
-    <dimen name="recent_thumbnail_height">140dp</dimen>
+    <color name="recent_background">#80f5f5f5</color>
+    <!-- Card Color -->
+    <color name="card_background">#ffffffff</color>
+    <color name="card_background_header">#ffffffff</color>
+    <color name="card_backgroundExpand">#fff5f5f5</color>
+    <color name="card_text_color_header">#ff000000</color>
+    <!-- Used by selector -->
+    <color name="card_pressed">#7e3c3c3c</color>
 
 </resources>
