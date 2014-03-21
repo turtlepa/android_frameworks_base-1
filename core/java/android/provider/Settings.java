@@ -2456,6 +2456,13 @@ public final class Settings {
                 "lockscreen_use_widget_container_carousel";
 
         /**
+         * Whether to hide the frame behind lockscreen widgets
+         * @hide
+         */
+        public static final String LOCKSCREEN_WIDGET_FRAME_ENABLED =
+                "lockscreen_widget_frame_enabled";
+
+        /**
          * Whether lid wakes the device
          * @hide
          */
