@@ -41,6 +41,10 @@ public class ButtonsConstants {
     public static final String ACTION_TORCH                = "**torch**";
     public static final String ACTION_EXPANDED_DESKTOP     = "**expanded_desktop**";
     public static final String ACTION_THEME_SWITCH         = "**theme_switch**";
+    public static final String ACTION_IME_NAVIGATION_LEFT  = "**ime_nav_left**";
+    public static final String ACTION_IME_NAVIGATION_RIGHT = "**ime_nav_right**";
+    public static final String ACTION_IME_NAVIGATION_UP    = "**ime_nav_up**";
+    public static final String ACTION_IME_NAVIGATION_DOWN  = "**ime_nav_down**";
 
     // no action
     public static final String ACTION_NULL            = "**null**";
