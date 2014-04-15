@@ -518,4 +518,10 @@ public class IWindowManagerImpl implements IWindowManager {
     @Override
     public int getCurrentNavigationBarSize() {
     }
+
+    /* @hide */
+    @Override
+    public int getSystemUIVisibility() {
+        return 0;
+    }
 }

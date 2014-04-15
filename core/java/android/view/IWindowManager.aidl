@@ -312,4 +312,11 @@ interface IWindowManager
      * @hide
      */
     int getCurrentNavigationBarSize();
+
+    /**
+     * Get current system ui visibility mode.
+     *
+     * @hide
+     */
+    int getSystemUIVisibility();
 }
