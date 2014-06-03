@@ -233,6 +233,8 @@ public class WifiStateMachine extends StateMachine {
     private DhcpStateMachine mDhcpStateMachine;
     private boolean mDhcpActive = false;
 
+    private final AtomicInteger mCountryCodeSequence = new AtomicInteger();
+
     private class InterfaceObserver extends BaseNetworkObserver {
         private WifiStateMachine mWifiStateMachine;
 
@@ -273,9 +275,6 @@ public class WifiStateMachine extends StateMachine {
 
     /* Tracks current frequency mode */
     private AtomicInteger mFrequencyBand = new AtomicInteger(WifiManager.WIFI_FREQUENCY_BAND_AUTO);
-
-    /* Tracks current country code */
-    private String mCountryCode = "GB";
 
     /* Tracks if we are filtering Multicast v4 packets. Default is to filter. */
     private AtomicBoolean mFilteringMulticastV4Packets = new AtomicBoolean(true);
@@ -1537,30 +1536,16 @@ public class WifiStateMachine extends StateMachine {
      * @param persist {@code true} if the setting should be remembered.
      */
     public void setCountryCode(String countryCode, boolean persist) {
-
-        String countryCodeUser = Settings.Global.getString(mContext.getContentResolver(),
-                Settings.Global.WIFI_COUNTRY_CODE_USER);
-        if (countryCodeUser != null && countryCodeUser != countryCode) {
-            persist = true;
-            countryCode = countryCodeUser;
-            mCountryCode = countryCode;
+        // If it's a good country code, apply after the current
+        // wifi connection is terminated; ignore resetting of code
+        // for now (it is unclear what the chipset should do when
+        // country code is reset)
+        int countryCodeSequence = mCountryCodeSequence.incrementAndGet();
+        if (TextUtils.isEmpty(countryCode)) {
+            log("Ignoring resetting of country code");
+        } else {
+            sendMessage(CMD_SET_COUNTRY_CODE, countryCodeSequence, persist ? 1 : 0, countryCode);
         }
-
-        if (persist) {
-            mPersistedCountryCode = countryCode;
-            Settings.Global.putString(mContext.getContentResolver(),
-                    Settings.Global.WIFI_COUNTRY_CODE,
-                    countryCode);
-        }
-        sendMessage(CMD_SET_COUNTRY_CODE, countryCode);
-        mWifiP2pChannel.sendMessage(WifiP2pService.SET_COUNTRY_CODE, countryCode);
-    }
-
-    /**
-     * Returns the operational country code
-     */
-    public String getCountryCode() {
-        return mCountryCode;
     }
 
     /**
@@ -1672,6 +1657,8 @@ public class WifiStateMachine extends StateMachine {
         pw.println("mSuspendOptNeedsDisabled " + mSuspendOptNeedsDisabled);
         pw.println("Supplicant status " + mWifiNative.status());
         pw.println("mEnableBackgroundScan " + mEnableBackgroundScan);
+        pw.println("mLastSetCountryCode " + mLastSetCountryCode);
+        pw.println("mPersistedCountryCode " + mPersistedCountryCode);
         pw.println();
         mWifiConfigStore.dump(fd, pw, args);
     }
@@ -1794,17 +1781,8 @@ public class WifiStateMachine extends StateMachine {
                 Settings.Global.WIFI_COUNTRY_CODE);
         if (countryCode != null && !countryCode.isEmpty()) {
             setCountryCode(countryCode, false);
-            mCountryCode = countryCode;
         } else {
-            // On wifi-only devices, some drivers don't find hidden SSIDs unless DRIVER COUNTRY
-            // is called. Pinging the wifi driver without country code resolves this issue.
-            ConnectivityManager cm =
-                    (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (!cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)) {
-                setCountryCode(null, false);
-            }
-
-            // In other case, mmc tables from carrier do the trick of starting up the wifi driver
+            //use driver default
         }
     }
 
@@ -1956,7 +1934,6 @@ public class WifiStateMachine extends StateMachine {
 
         scanResults = scanResultsBuf.toString();
         if (TextUtils.isEmpty(scanResults)) {
-           mScanResults.clear();
            return;
         }
 
@@ -2324,7 +2301,6 @@ public class WifiStateMachine extends StateMachine {
         * or when the driver is hung. Ensure supplicant is stopped here.
         */
         mWifiMonitor.killSupplicant(mP2pSupported);
-        mWifiNative.closeSupplicantConnection();
         sendSupplicantConnectionChangedBroadcast(false);
         setWifiState(WIFI_STATE_DISABLED);
     }
@@ -2537,7 +2513,9 @@ public class WifiStateMachine extends StateMachine {
                         // to the driver happened between mPersistedCountryCode getting set
                         // and now, so simply persisting it here would mean we have sent
                         // nothing to the driver.  Send the cmd so it might be set now.
-                        sendMessageAtFrontOfQueue(CMD_SET_COUNTRY_CODE, countryCode);
+                        int sequenceNum = mCountryCodeSequence.incrementAndGet();
+                        sendMessageAtFrontOfQueue(CMD_SET_COUNTRY_CODE,
+                                sequenceNum, 0, countryCode);
                     }
                     break;
                 case CMD_SET_BATCHED_SCAN:
@@ -3115,23 +3093,38 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_SET_BATCHED_SCAN:
                     if (recordBatchedScanSettings(message.arg1, message.arg2,
                             (Bundle)message.obj)) {
-                        startBatchedScan();
+                        if (mBatchedScanSettings != null) {
+                            startBatchedScan();
+                        } else {
+                            stopBatchedScan();
+                        }
                     }
                     break;
                 case CMD_SET_COUNTRY_CODE:
                     String country = (String) message.obj;
+                    final boolean persist = (message.arg2 == 1);
+                    final int sequence = message.arg1;
+                    if (sequence != mCountryCodeSequence.get()) {
+                        if (DBG) log("set country code ignored due to sequence num");
+                        break;
+                    }
                     if (DBG) log("set country code " + country);
-                    if (country != null) {
-                        country = country.toUpperCase(Locale.ROOT);
-                        if (mLastSetCountryCode == null
-                                || country.equals(mLastSetCountryCode) == false) {
-                            if (mWifiNative.setCountryCode(country)) {
-                                mLastSetCountryCode = country;
-                            } else {
-                                loge("Failed to set country code " + country);
-                            }
+                    if (persist) {
+                        mPersistedCountryCode = country;
+                        Settings.Global.putString(mContext.getContentResolver(),
+                                Settings.Global.WIFI_COUNTRY_CODE,
+                                country);
+                    }
+                    country = country.toUpperCase(Locale.ROOT);
+                    if (mLastSetCountryCode == null
+                            || country.equals(mLastSetCountryCode) == false) {
+                        if (mWifiNative.setCountryCode(country)) {
+                            mLastSetCountryCode = country;
+                        } else {
+                            loge("Failed to set country code " + country);
                         }
                     }
+                    mWifiP2pChannel.sendMessage(WifiP2pService.SET_COUNTRY_CODE, country);
                     break;
                 case CMD_SET_FREQUENCY_BAND:
                     int band =  message.arg1;
@@ -3684,6 +3677,9 @@ public class WifiStateMachine extends StateMachine {
                         deferMessage(message);
                     }
                     break;
+                case CMD_SET_COUNTRY_CODE:
+                    deferMessage(message);
+                    break;
                 case CMD_START_SCAN:
                     /* Do not attempt to connect when we are already connected */
                     noteScanStart(message.arg1, (WorkSource) message.obj);
@@ -3907,12 +3903,9 @@ public class WifiStateMachine extends StateMachine {
         }
         @Override
         public void exit() {
-            if (Settings.Global.getInt(mContext.getContentResolver(),
-                    Settings.Global.AIRPLANE_MODE_ON, 0) != 1) {
-                /* Request a CS wakelock during transition to mobile */
-                checkAndSetConnectivityInstance();
-                mCm.requestNetworkTransitionWakelock(getName());
-            }
+            /* Request a CS wakelock during transition to mobile */
+            checkAndSetConnectivityInstance();
+            mCm.requestNetworkTransitionWakelock(getName());
         }
     }
 
@@ -3989,11 +3982,7 @@ public class WifiStateMachine extends StateMachine {
                  * cleared
                  */
                 if (!mScanResultIsPending) {
-                    if (!mWifiNative.enableBackgroundScan(true)) {
-                        setScanAlarm(true);
-                    } else {
-                        setScanAlarm(false);
-                    }
+                    mWifiNative.enableBackgroundScan(true);
                 }
             } else {
                 setScanAlarm(true);
@@ -4047,11 +4036,8 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_ENABLE_BACKGROUND_SCAN:
                     mEnableBackgroundScan = (message.arg1 == 1);
                     if (mEnableBackgroundScan) {
-                        if (!mWifiNative.enableBackgroundScan(true)) {
-                            setScanAlarm(true);
-                        } else {
-                            setScanAlarm(false);
-                        }
+                        mWifiNative.enableBackgroundScan(true);
+                        setScanAlarm(false);
                     } else {
                         mWifiNative.enableBackgroundScan(false);
                         setScanAlarm(true);
@@ -4077,11 +4063,7 @@ public class WifiStateMachine extends StateMachine {
                 case WifiMonitor.SCAN_RESULTS_EVENT:
                     /* Re-enable background scan when a pending scan result is received */
                     if (mEnableBackgroundScan && mScanResultIsPending) {
-                        if (!mWifiNative.enableBackgroundScan(true)) {
-                            setScanAlarm(true);
-                        } else {
-                            setScanAlarm(false);
-                        }
+                        mWifiNative.enableBackgroundScan(true);
                     }
                     /* Handled in parent state */
                     ret = NOT_HANDLED;
@@ -4100,13 +4082,6 @@ public class WifiStateMachine extends StateMachine {
                         if (DBG) log("Turn on scanning after p2p disconnected");
                         sendMessageDelayed(obtainMessage(CMD_NO_NETWORKS_PERIODIC_SCAN,
                                     ++mPeriodicScanToken, 0), mSupplicantScanIntervalMs);
-                    } else if (mEnableBackgroundScan && !mP2pConnected.get() &&
-                               (mWifiConfigStore.getConfiguredNetworks().size() != 0)) {
-                        if (!mWifiNative.enableBackgroundScan(true)) {
-                            setScanAlarm(true);
-                        } else {
-                            setScanAlarm(false);
-                        }
                     }
                 case CMD_RECONNECT:
                 case CMD_REASSOCIATE:
