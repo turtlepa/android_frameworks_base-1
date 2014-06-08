@@ -659,7 +659,7 @@ public class ActiveDisplayView extends FrameLayout {
     private synchronized void handleHideNotificationView() {
         setVisibility(View.GONE);
         restoreBrightness();
-        //mBar.disable(0);
+        mBar.disable(0);
         mWakedByPocketMode = false;
         cancelTimeoutTimer();
         if (isLockScreenDisabled()) {
