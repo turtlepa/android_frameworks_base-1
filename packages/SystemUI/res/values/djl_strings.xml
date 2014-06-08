@@ -105,8 +105,4 @@
     <string name="quick_settings_quick_record_save">Saved</string>
     <string name="quick_settings_quick_record_play">Playing...</string>
 
-    <!-- Development shortcut -->
-    <string name="advanced_dev_option_wipe_app">Wipe app data</string>
-    <string name="advanced_dev_option_force_stop">Force stop</string>
-
 </resources>
