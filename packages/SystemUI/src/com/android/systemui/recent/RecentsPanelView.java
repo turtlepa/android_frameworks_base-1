@@ -355,7 +355,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
         mShowing = show;
         mClearPosition = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CLEAR_RECENTS_POSITION, 3);
+                Settings.System.CLEAR_RECENTS_POSITION, 2);
 
         if (show) {
             // if there are no apps, bring up a "No recent apps" message

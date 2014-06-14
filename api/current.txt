@@ -3180,13 +3180,8 @@ package android.app {
     method public int checkOpNoThrow(java.lang.String, int, java.lang.String);
     method public void checkPackage(int, java.lang.String);
     method public void finishOp(java.lang.String, int, java.lang.String);
-    method public static int getPrivacyGuardIconResId(int);
-    method public static int getPrivacyGuardOp(java.lang.String);
-    method public java.util.List<java.lang.Integer> getPrivacyGuardOpsForPackage(java.lang.String);
-    method public int getPrivacyGuardSettingForPackage(int, java.lang.String);
     method public int noteOp(java.lang.String, int, java.lang.String);
     method public int noteOpNoThrow(java.lang.String, int, java.lang.String);
-    method public void setPrivacyGuardSettingForPackage(int, java.lang.String, boolean, boolean);
     method public int startOp(java.lang.String, int, java.lang.String);
     method public int startOpNoThrow(java.lang.String, int, java.lang.String);
     method public void startWatchingMode(java.lang.String, java.lang.String, android.app.AppOpsManager.OnOpChangedListener);
@@ -3198,12 +3193,6 @@ package android.app {
     field public static final java.lang.String OPSTR_FINE_LOCATION = "android:fine_location";
     field public static final java.lang.String OPSTR_MONITOR_HIGH_POWER_LOCATION = "android:monitor_location_high_power";
     field public static final java.lang.String OPSTR_MONITOR_LOCATION = "android:monitor_location";
-    field public static final int PRIVACY_GUARD_CUSTOM = 4; // 0x4
-    field public static final int PRIVACY_GUARD_CUSTOM_PLUS = 5; // 0x5
-    field public static final int PRIVACY_GUARD_DISABLED = 0; // 0x0
-    field public static final int PRIVACY_GUARD_DISABLED_PLUS = 1; // 0x1
-    field public static final int PRIVACY_GUARD_ENABLED = 2; // 0x2
-    field public static final int PRIVACY_GUARD_ENABLED_PLUS = 3; // 0x3
   }
 
   public static abstract interface AppOpsManager.OnOpChangedListener {
@@ -21220,7 +21209,6 @@ package android.provider {
 
   public static final class Settings.System extends android.provider.Settings.NameValueTable {
     ctor public Settings.System();
-    method public static boolean getBoolean(android.content.ContentResolver, java.lang.String, boolean);
     method public static void getConfiguration(android.content.ContentResolver, android.content.res.Configuration);
     method public static float getFloat(android.content.ContentResolver, java.lang.String, float);
     method public static float getFloat(android.content.ContentResolver, java.lang.String) throws android.provider.Settings.SettingNotFoundException;
@@ -21231,7 +21219,6 @@ package android.provider {
     method public static deprecated boolean getShowGTalkServiceStatus(android.content.ContentResolver);
     method public static java.lang.String getString(android.content.ContentResolver, java.lang.String);
     method public static android.net.Uri getUriFor(java.lang.String);
-    method public static boolean putBoolean(android.content.ContentResolver, java.lang.String, boolean);
     method public static boolean putConfiguration(android.content.ContentResolver, android.content.res.Configuration);
     method public static boolean putFloat(android.content.ContentResolver, java.lang.String, float);
     method public static boolean putInt(android.content.ContentResolver, java.lang.String, int);
@@ -21245,8 +21232,6 @@ package android.provider {
     field public static final java.lang.String ALARM_ALERT = "alarm_alert";
     field public static final deprecated java.lang.String ALWAYS_FINISH_ACTIVITIES = "always_finish_activities";
     field public static final deprecated java.lang.String ANDROID_ID = "android_id";
-    field public static final java.lang.String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
-    field public static final java.lang.String ANIMATION_CONTROLS_NO_OVERRIDE = "animation_controls_no_override";
     field public static final deprecated java.lang.String ANIMATOR_DURATION_SCALE = "animator_duration_scale";
     field public static final java.lang.String APPEND_FOR_LAST_AUDIBLE = "_last_audible";
     field public static final deprecated java.lang.String AUTO_TIME = "auto_time";
@@ -29518,7 +29503,6 @@ package android.view.inputmethod {
     ctor public EditorInfo();
     method public int describeContents();
     method public void dump(android.util.Printer, java.lang.String);
-    method public final void formalTextInput(boolean);
     method public final void makeCompatible(int);
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator CREATOR;
