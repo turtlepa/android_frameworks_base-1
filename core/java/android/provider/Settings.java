@@ -3006,13 +3006,6 @@ public final class Settings {
         public static final String NOTIFICATION_SHORTCUTS_COLOR_MODE = "notification_shortcuts_color_mode";
 
         /**
-         * Choose position of Clear button on Recents window
-         * 0 = disabled, 1 = bottom right, 2 = bottom left, 3 = top right, 4 = top left
-         * @hide
-         */
-        public static final String CLEAR_RECENTS_POSITION = "clear_recents_position"; 
-
-        /**
          * Show the pending notification counts as overlays on the status bar
          * @hide
          */
