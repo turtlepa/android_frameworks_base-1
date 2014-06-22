@@ -100,16 +100,16 @@ public class SlimActions {
                 injectKeyDelayed(KeyEvent.KEYCODE_MENU, isLongpress, false);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_IME_NAVIGATION_LEFT)) {
-                triggerVirtualKeypress(KeyEvent.KEYCODE_DPAD_LEFT, isLongpress);
+                injectKeyDelayed(KeyEvent.KEYCODE_DPAD_LEFT, isLongpress, false);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_IME_NAVIGATION_RIGHT)) {
-                triggerVirtualKeypress(KeyEvent.KEYCODE_DPAD_RIGHT, isLongpress);
+                injectKeyDelayed(KeyEvent.KEYCODE_DPAD_RIGHT, isLongpress, false);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_IME_NAVIGATION_UP)) {
-                triggerVirtualKeypress(KeyEvent.KEYCODE_DPAD_UP, isLongpress);
+                injectKeyDelayed(KeyEvent.KEYCODE_DPAD_UP, isLongpress, false);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_IME_NAVIGATION_DOWN)) {
-                triggerVirtualKeypress(KeyEvent.KEYCODE_DPAD_DOWN, isLongpress);
+                injectKeyDelayed(KeyEvent.KEYCODE_DPAD_DOWN, isLongpress, false);
                 return;
             } else if (action.equals(ButtonsConstants.ACTION_POWER_MENU)) {
                 injectKeyDelayed(KeyEvent.KEYCODE_POWER, isLongpress, true);
