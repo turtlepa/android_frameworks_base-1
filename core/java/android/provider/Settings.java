@@ -2993,6 +2993,34 @@ public final class Settings {
          */
         public static final String NOTIFICATION_HIDE_CARRIER = "notification_hide_carrier";
 
+        /**
+         * Whether heads up notification is expanded by default (default = disabled)
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_EXPANDED = "heads_up_expanded";
+
+        /**
+         * Time where heads up is disabled by user interaction (default = 5 minutes)
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_SNOOZE_TIME = "heads_up_snooze_time";
+
+        /**
+         * Time how long heads up will show till it is automatically hidden.
+         * If time = 0 notifications stays till the user interacts with it.
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_NOTIFCATION_DECAY = "heads_up_notifcation_decay";
+
+        /**
+         * Whether notification updates from background notifications should be shown as heads up.
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_SHOW_UPDATE = "heads_up_show_update";
 
         /**
           * Stores values for notification shortcut targets
@@ -3059,6 +3087,13 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_CUSTOM_CARRIER_LABEL = "notification_custom_carrier_label";
+
+        /**
+         * Whether incomming call UI stays in background and shows as heads up notification
+         *
+         * @hide
+         */
+        public static final String CALL_UI_AS_HEADS_UP = "call_ui_as_heads_up";
 
         /**
          * Network activity arrows
