@@ -25,6 +25,9 @@
     <dimen name="notification_shortcuts_spacing_height">88dp</dimen>
     <dimen name="notification_shortcuts_drawer_margin">56dp</dimen>
 
+    <!-- Heads up -->
+    <dimen name="heads_up_bottom_gap">5dp</dimen>
+
     <!-- Slim recent -->
     <dimen name="recent_width">230dp</dimen>
     <dimen name="recent_app_icon_size">48dp</dimen>
