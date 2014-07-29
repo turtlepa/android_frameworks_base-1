@@ -17,8 +17,8 @@
 
 package com.android.systemui.quicksettings;
 
-import static com.android.internal.util.slim.QSConstants.TILE_CUSTOM_KEY;
-import static com.android.internal.util.slim.QSConstants.TILE_CUSTOM_DELIMITER;
+import static com.android.internal.util.djl.QSConstants.TILE_CUSTOM_KEY;
+import static com.android.internal.util.djl.QSConstants.TILE_CUSTOM_DELIMITER;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,8 +35,8 @@ import android.view.LayoutInflater;
 import android.util.Log;
 import android.view.View;
 
-import com.android.internal.util.slim.AppHelper;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.djl.AppHelper;
+import com.android.internal.util.djl.SlimActions;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.QuickSettingsContainerView;
 import com.android.systemui.statusbar.phone.QuickSettingsController;
